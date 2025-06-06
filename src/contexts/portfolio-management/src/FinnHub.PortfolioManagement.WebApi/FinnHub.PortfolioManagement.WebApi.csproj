@@ -10,6 +10,11 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.5" />
+    <PackageReference Include="Scalar.AspNetCore" Version="2.4.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FinnHub.PortfolioManagement.Infrastructure.Logger\FinnHub.PortfolioManagement.Infrastructure.Logger.csproj" />
   </ItemGroup>
 
 </Project>

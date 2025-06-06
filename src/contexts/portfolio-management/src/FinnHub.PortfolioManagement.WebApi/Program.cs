@@ -1,23 +1,16 @@
-var builder = WebApplication.CreateBuilder(args);
+using FinnHub.PortfolioManagement.WebApi;
 
-// Add services to the container.
-
-builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+try
 {
-    app.MapOpenApi();
+    var builder = WebApplication.CreateBuilder(args);
+    StartupHelper.ConfigureServices(builder);
+    var app = builder.Build();
+    StartupHelper.ConfigureApp(app);
+    await app.RunAsync();
 }
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
+catch (Exception ex)
+{
+    using ILoggerFactory factory = LoggerFactory.Create(builder => builder.AddConsole());
+    var logger = factory.CreateLogger<WebApplication>();
+    logger.LogCritical(ex, "An unhandled exception occurred during application startup.");
+}
