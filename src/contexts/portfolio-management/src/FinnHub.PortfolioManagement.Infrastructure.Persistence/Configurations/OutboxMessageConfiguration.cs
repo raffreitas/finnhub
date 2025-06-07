@@ -25,10 +25,7 @@ internal sealed class OutboxMessageConfiguration : IEntityTypeConfiguration<Outb
             .Property(e => e.ProcessedAt)
             .IsRequired(false);
         builder
-            .Property(e => e.Exchange)
-            .IsRequired();
-        builder
-            .Property(e => e.RoutingKey)
+            .Property(e => e.EventName)
             .IsRequired();
         builder
             .Property(e => e.MessageType)

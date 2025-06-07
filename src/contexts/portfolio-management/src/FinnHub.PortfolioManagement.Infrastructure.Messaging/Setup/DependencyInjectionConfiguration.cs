@@ -3,7 +3,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace FinnHub.PortfolioManagement.Infrastructure.Messaging;
+namespace FinnHub.PortfolioManagement.Infrastructure.Messaging.Setup;
 public static class DependencyInjectionConfiguration
 {
     public static IServiceCollection AddMessagingConfiguration(this IServiceCollection services, IConfiguration configuration)
@@ -15,18 +15,17 @@ public static class DependencyInjectionConfiguration
     private static MessagingSettings GetSettings(
         IServiceCollection services,
         IConfiguration configuration,
-        string section = MessagingSettings.SectionName
-    )
+        string section = MessagingSettings.SectionName)
     {
-        // TODO: Add data annotations validation for MessagingSettings
+        // TODO: Add data annotations validation for CacheSettings
         services.AddOptions<MessagingSettings>()
             .BindConfiguration(section)
             .ValidateOnStart();
 
-        var messagingSettings = configuration.GetSection(section).Get<MessagingSettings>()
+        var settings = configuration.GetSection(section).Get<MessagingSettings>()
             ?? throw new ArgumentException($"{nameof(MessagingSettings)} should be configured.");
 
-        return messagingSettings;
+        return settings;
 
     }
 }
