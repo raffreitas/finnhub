@@ -1,7 +1,7 @@
-﻿using FinnHub.PortfolioManagement.Domain.SeedWork;
-using FinnHub.PortfolioManagement.Domain.ValueObjects;
+﻿using FinnHub.PortfolioManagement.Domain.Aggregates.ValueObjects;
+using FinnHub.PortfolioManagement.Domain.SeedWork;
 
-namespace FinnHub.PortfolioManagement.Domain.Entities;
+namespace FinnHub.PortfolioManagement.Domain.Aggregates.Entities;
 
 /// <summary>
 /// Position represents the current holdings of a specific asset within a portfolio.
@@ -68,7 +68,7 @@ public sealed class Position : Entity
             if (UnrealizedProfitLoss == null || TotalCost.Value == 0)
                 return null;
 
-            return (UnrealizedProfitLoss.Value.Value / TotalCost.Value) * 100;
+            return UnrealizedProfitLoss.Value.Value / TotalCost.Value * 100;
         }
     }
 }

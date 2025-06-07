@@ -1,6 +1,6 @@
 ﻿using FinnHub.PortfolioManagement.Domain.SeedWork;
 
-namespace FinnHub.PortfolioManagement.Domain.ValueObjects;
+namespace FinnHub.PortfolioManagement.Domain.Aggregates.ValueObjects;
 public record struct Money : IValueObject
 {
     public decimal Value { get; private set; }

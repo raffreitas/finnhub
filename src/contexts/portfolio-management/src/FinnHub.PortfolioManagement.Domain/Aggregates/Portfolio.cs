@@ -1,9 +1,9 @@
-﻿using FinnHub.PortfolioManagement.Domain.Enums;
-using FinnHub.PortfolioManagement.Domain.Events;
+﻿using FinnHub.PortfolioManagement.Domain.Aggregates.Entities;
+using FinnHub.PortfolioManagement.Domain.Aggregates.Enums;
+using FinnHub.PortfolioManagement.Domain.Aggregates.ValueObjects;
 using FinnHub.PortfolioManagement.Domain.SeedWork;
-using FinnHub.PortfolioManagement.Domain.ValueObjects;
 
-namespace FinnHub.PortfolioManagement.Domain.Entities;
+namespace FinnHub.PortfolioManagement.Domain.Aggregates;
 
 /// <summary>
 /// Portfolio is the aggregate root for the portfolio management domain.
@@ -236,7 +236,7 @@ public sealed class Portfolio : AggregateRoot
         Money totalValue = CalculateCurrentValue();
         Money costBasis = CalculateTotalCostBasis();
         decimal profitLoss = totalValue.Value - costBasis.Value;
-        decimal profitLossPercentage = costBasis.Value != 0 ? (profitLoss / costBasis.Value) * 100 : 0;
+        decimal profitLossPercentage = costBasis.Value != 0 ? profitLoss / costBasis.Value * 100 : 0;
 
         AddDomainEvent(new PortfolioValuationUpdatedEvent(Id, totalValue.Value, profitLoss, profitLossPercentage));
     }

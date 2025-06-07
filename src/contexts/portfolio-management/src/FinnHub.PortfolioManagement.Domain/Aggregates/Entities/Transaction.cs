@@ -1,8 +1,8 @@
-using FinnHub.PortfolioManagement.Domain.Enums;
+using FinnHub.PortfolioManagement.Domain.Aggregates.Enums;
+using FinnHub.PortfolioManagement.Domain.Aggregates.ValueObjects;
 using FinnHub.PortfolioManagement.Domain.SeedWork;
-using FinnHub.PortfolioManagement.Domain.ValueObjects;
 
-namespace FinnHub.PortfolioManagement.Domain.Entities;
+namespace FinnHub.PortfolioManagement.Domain.Aggregates.Entities;
 
 /// <summary>
 /// Transaction represents a buy or sell operation of an asset in a portfolio.
@@ -150,7 +150,7 @@ public sealed class Transaction : Entity
             if (ProfitLoss == null || TotalAmount.Value == 0)
                 return null;
 
-            return (ProfitLoss.Value.Value / TotalAmount.Value) * 100;
+            return ProfitLoss.Value.Value / TotalAmount.Value * 100;
         }
     }
 

@@ -1,6 +1,6 @@
 ﻿using FinnHub.PortfolioManagement.Domain.SeedWork;
 
-namespace FinnHub.PortfolioManagement.Domain.Events;
+namespace FinnHub.PortfolioManagement.Domain.Aggregates.Events;
 
 public record AssetSoldEvent : DomainEvent
 {
