@@ -14,4 +14,9 @@
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="9.0.5" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\FinnHub.PortfolioManagement.Application\FinnHub.PortfolioManagement.Application.csproj" />
+    <ProjectReference Include="..\FinnHub.PortfolioManagement.Infrastructure.Messaging\FinnHub.PortfolioManagement.Infrastructure.Messaging.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,5 +1,7 @@
-﻿using FinnHub.PortfolioManagement.Infrastructure.Persistence.Context;
+﻿using FinnHub.PortfolioManagement.Application.Abstractions;
+using FinnHub.PortfolioManagement.Infrastructure.Persistence.Context;
 using FinnHub.PortfolioManagement.Infrastructure.Persistence.Settings;
+using FinnHub.PortfolioManagement.Infrastructure.Persistence.Shared;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -20,6 +22,8 @@ public static class DependencyInjectionConfiguration
             }).UseSnakeCaseNamingConvention());
 
         services.AddHealthChecksConfiguration(settings);
+
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         return services;
     }
