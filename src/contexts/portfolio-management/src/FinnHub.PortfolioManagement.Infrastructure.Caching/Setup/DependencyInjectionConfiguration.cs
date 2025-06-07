@@ -35,10 +35,10 @@ public static class DependencyInjectionConfiguration
             .BindConfiguration(section)
             .ValidateOnStart();
 
-        var openTelemetrySettings = configuration.GetSection(section).Get<CacheSettings>()
+        var cacheSettings = configuration.GetSection(section).Get<CacheSettings>()
             ?? throw new ArgumentException($"{nameof(CacheSettings)} should be configured.");
 
-        return openTelemetrySettings;
+        return cacheSettings;
 
     }
 }

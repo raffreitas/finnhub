@@ -1,4 +1,5 @@
 ﻿using FinnHub.PortfolioManagement.Infrastructure.Logger.Setup;
+using FinnHub.PortfolioManagement.Infrastructure.Persistence.Setup;
 using FinnHub.PortfolioManagement.WebApi.Setup;
 
 namespace FinnHub.PortfolioManagement.WebApi;
@@ -11,6 +12,7 @@ public static class StartupHelper
 
         builder.Services.AddControllers();
         builder.Services.AddOpenApiConfiguration();
+        builder.Services.AddPersistenceConfiguration(builder.Configuration);
     }
 
     public static void ConfigureApp(WebApplication app)
