@@ -24,6 +24,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\FinnHub.PortfolioManagement.Domain\FinnHub.PortfolioManagement.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Using Include="Xunit" />
   </ItemGroup>
 
