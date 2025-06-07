@@ -8,5 +8,4 @@ internal sealed record DatabaseSettings
     [Required, Url]
     public required string ConnectionString { get; init; }
     public int CommandTimeoutInSeconds { get; init; } = 180;
-    public bool EnableSensitiveDataLogging { get; init; } = false;
 }
