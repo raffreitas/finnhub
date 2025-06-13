@@ -30,9 +30,9 @@ public static class DependencyInjectionConfiguration
 
     private static CacheSettings GetSettings(IServiceCollection services, IConfiguration configuration, string section = CacheSettings.SectionName)
     {
-        // TODO: Add data annotations validation for CacheSettings
         services.AddOptions<CacheSettings>()
             .BindConfiguration(section)
+            .ValidateDataAnnotations()
             .ValidateOnStart();
 
         var cacheSettings = configuration.GetSection(section).Get<CacheSettings>()

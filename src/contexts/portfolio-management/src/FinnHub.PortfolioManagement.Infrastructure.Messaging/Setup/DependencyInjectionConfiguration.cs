@@ -17,9 +17,9 @@ public static class DependencyInjectionConfiguration
         IConfiguration configuration,
         string section = MessagingSettings.SectionName)
     {
-        // TODO: Add data annotations validation for CacheSettings
         services.AddOptions<MessagingSettings>()
             .BindConfiguration(section)
+            .ValidateDataAnnotations()
             .ValidateOnStart();
 
         var settings = configuration.GetSection(section).Get<MessagingSettings>()

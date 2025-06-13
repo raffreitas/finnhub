@@ -38,14 +38,14 @@ public static class DependencyInjectionConfiguration
 
     private static DatabaseSettings GetSettings(IServiceCollection services, IConfiguration configuration, string section = DatabaseSettings.SectionName)
     {
-        // TODO: Add data annotations validation for CacheSettings
         services.AddOptions<DatabaseSettings>()
             .BindConfiguration(section)
+            .ValidateDataAnnotations()
             .ValidateOnStart();
 
-        var databaseSettings = configuration.GetSection(section).Get<DatabaseSettings>()
+        var settings = configuration.GetSection(section).Get<DatabaseSettings>()
             ?? throw new ArgumentException($"{nameof(DatabaseSettings)} should be configured.");
 
-        return databaseSettings;
+        return settings;
     }
 }
