@@ -1,0 +1,34 @@
+name: Portfolio Management
+on:
+  push:
+    branches: [main, release]
+    paths:
+      - 'src/contexts/portfolio-management/**'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'src/contexts/portfolio-management/**'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 9.x.x
+    - name: Restore dependencies
+      run: |
+          cd src/contexts/portfolio-management
+          dotnet restore
+    - name: Build
+      run: |
+        cd src/contexts/portfolio-management
+        dotnet build --no-restore
+    - name: Test
+      run: |
+        cd src/contexts/portfolio-management
+        dotnet test --no-build --verbosity normal
