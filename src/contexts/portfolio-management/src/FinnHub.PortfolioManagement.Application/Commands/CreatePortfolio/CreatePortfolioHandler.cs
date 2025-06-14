@@ -44,6 +44,6 @@ internal sealed class CreatePortfolioHandler : IRequestHandler<CreatePortfolioRe
 
         await _unitOfWork.CommitAsync(cancellationToken);
 
-        return Result.Success(new CreatePortfolioResponse(Guid.Empty));
+        return Result.Success(new CreatePortfolioResponse(portfolio.Id));
     }
 }

@@ -25,7 +25,7 @@ public class PortfolioController(ISender sender) : ControllerBase
         var result = await sender.Send(request, cancellationToken);
 
         return result.IsFailure
-            ? HandleResponse(HttpStatusCode.UnprocessableEntity, result.Errors)
-            : Created();
+            ? HandleResponse(HttpStatusCode.UnprocessableEntity, errors: result.Errors)
+            : HandleResponse(HttpStatusCode.Created, response: result.Value);
     }
 }

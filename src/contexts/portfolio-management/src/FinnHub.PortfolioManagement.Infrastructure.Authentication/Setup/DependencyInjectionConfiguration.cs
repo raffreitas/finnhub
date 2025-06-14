@@ -40,12 +40,15 @@ public static class DependencyInjectionConfiguration
 
     private static IServiceCollection AddJwtAuthentication(this IServiceCollection services, AuthenticationSettings settings)
     {
+        services.AddAuthorization();
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters
             {
                 ValidateLifetime = true,
                 ValidateIssuerSigningKey = true,
-
+                ValidateIssuer = false,
+                ValidateAudience = false,
+                ClockSkew = TimeSpan.Zero,
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(settings.JwtSecret)),
             });
 
