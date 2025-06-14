@@ -11,8 +11,12 @@ public static class OpenApiConfiguration
 {
     public static IServiceCollection AddOpenApiConfiguration(this IServiceCollection services)
     {
-        services.AddOpenApi(options => options
-            .AddDocumentTransformer<BearerSecuritySchemeTransformer>());
+        services.AddOpenApi(options =>
+        {
+            options.AddDocumentTransformer<BearerSecuritySchemeTransformer>();
+            options.AddDocumentTransformer<OpenApiDocumentTransformer>();
+        });
+
         return services;
     }
 
@@ -21,7 +25,9 @@ public static class OpenApiConfiguration
         if (app.Environment.IsDevelopment())
         {
             app.MapOpenApi();
-            app.MapScalarApiReference();
+            app.MapScalarApiReference(options => options
+                .WithTitle("FinnHub - Portfolio Management API")
+            );
         }
 
         return app;
@@ -51,6 +57,21 @@ public static class OpenApiConfiguration
                 document.Components ??= new OpenApiComponents();
                 document.Components.SecuritySchemes = requirements;
             }
+        }
+    }
+
+    internal sealed class OpenApiDocumentTransformer : IOpenApiDocumentTransformer
+    {
+        public Task TransformAsync(OpenApiDocument document, OpenApiDocumentTransformerContext context, CancellationToken cancellationToken)
+        {
+            document.Info = new()
+            {
+                Title = "FinnHub - Portfolio Management API",
+                Version = "v1",
+                Description = "API for managing portfolios, stocks, and trades.",
+            };
+
+            return Task.CompletedTask;
         }
     }
 }
