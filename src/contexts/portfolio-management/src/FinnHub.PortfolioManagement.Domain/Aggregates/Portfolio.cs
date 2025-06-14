@@ -25,6 +25,8 @@ public sealed class Portfolio : AggregateRoot
     public IReadOnlyList<Position> Positions => _positions.AsReadOnly();
     public IReadOnlyList<Transaction> Transactions => _transactions.AsReadOnly();
 
+    private Portfolio() { }
+
     private Portfolio(Guid userId, string name, string? description = null)
     {
         Name = name;
@@ -198,7 +200,7 @@ public sealed class Portfolio : AggregateRoot
         {
             if (position.CurrentMarketValue != null)
             {
-                totalValue += position.CurrentMarketValue.Value.Value;
+                totalValue += position.CurrentMarketValue.Value;
             }
             else
             {

@@ -2,9 +2,9 @@ using FinnHub.PortfolioManagement.Domain.SeedWork;
 
 namespace FinnHub.PortfolioManagement.Domain.Aggregates.ValueObjects;
 
-public record struct AssetSymbol : IValueObject
+public record AssetSymbol : IValueObject
 {
-    public string Value { get; private set; }
+    public string Value { get; private init; }
 
     private AssetSymbol(string value)
     {

@@ -2,9 +2,9 @@ using FinnHub.PortfolioManagement.Domain.SeedWork;
 
 namespace FinnHub.PortfolioManagement.Domain.Aggregates.ValueObjects;
 
-public record struct Quantity : IValueObject
+public record Quantity : IValueObject
 {
-    public int Value { get; private set; }
+    public int Value { get; private init; }
 
     private Quantity(int value)
     {
@@ -28,7 +28,7 @@ public record struct Quantity : IValueObject
         int result = left.Value - right.Value;
         if (result < 0)
             throw new InvalidOperationException("Quantity cannot be negative");
-        
+
         return Create(result);
     }
 }

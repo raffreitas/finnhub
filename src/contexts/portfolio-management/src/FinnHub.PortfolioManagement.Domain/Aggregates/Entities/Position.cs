@@ -14,6 +14,9 @@ public sealed class Position : Entity
     public Money AverageCost { get; private set; }
     public Money? CurrentMarketPrice { get; private set; }
     public DateTimeOffset LastUpdated { get; private set; }
+    public Guid PortfolioId { get; private set; }
+
+    private Position() { }
 
     private Position(AssetSymbol assetSymbol, Quantity quantity, Money averageCost)
     {
@@ -53,22 +56,22 @@ public sealed class Position : Entity
 
     public Money TotalCost => Money.Create(AverageCost.Value * Quantity.Value);
 
-    public Money? CurrentMarketValue => CurrentMarketPrice.HasValue
-        ? Money.Create(CurrentMarketPrice.Value.Value * Quantity.Value)
+    public Money? CurrentMarketValue => CurrentMarketPrice is not null
+        ? Money.Create(CurrentMarketPrice.Value * Quantity.Value)
         : null;
 
-    public Money? UnrealizedProfitLoss => CurrentMarketValue.HasValue
-        ? Money.Create(CurrentMarketValue.Value.Value - TotalCost.Value)
+    public Money? UnrealizedProfitLoss => CurrentMarketValue is not null
+        ? Money.Create(CurrentMarketValue.Value - TotalCost.Value)
         : null;
 
     public decimal? UnrealizedProfitLossPercentage
     {
         get
         {
-            if (UnrealizedProfitLoss == null || TotalCost.Value == 0)
+            if (UnrealizedProfitLoss is null || TotalCost.Value == 0)
                 return null;
 
-            return UnrealizedProfitLoss.Value.Value / TotalCost.Value * 100;
+            return UnrealizedProfitLoss.Value / TotalCost.Value * 100;
         }
     }
 }

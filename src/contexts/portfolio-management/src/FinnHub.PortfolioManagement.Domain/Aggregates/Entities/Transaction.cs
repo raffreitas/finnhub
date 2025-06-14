@@ -19,6 +19,8 @@ public sealed class Transaction : Entity
     public Money? CurrentMarketValue { get; private set; }
     public bool IsSettled { get; private set; }
 
+    private Transaction() { }
+
     private Transaction(
         Guid portfolioId,
         AssetSymbol assetSymbol,
@@ -138,7 +140,7 @@ public sealed class Transaction : Entity
             if (CurrentMarketValue == null || Type != TransactionType.Buy)
                 return null;
 
-            return Money.Create(CurrentMarketValue.Value.Value - TotalAmount.Value);
+            return Money.Create(CurrentMarketValue.Value - TotalAmount.Value);
         }
     }
 
@@ -150,7 +152,7 @@ public sealed class Transaction : Entity
             if (ProfitLoss == null || TotalAmount.Value == 0)
                 return null;
 
-            return ProfitLoss.Value.Value / TotalAmount.Value * 100;
+            return ProfitLoss.Value / TotalAmount.Value * 100;
         }
     }
 

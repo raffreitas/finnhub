@@ -2,10 +2,10 @@
 using FinnHub.PortfolioManagement.Domain.SeedWork;
 
 namespace FinnHub.PortfolioManagement.Domain.Aggregates.ValueObjects;
-public record struct Money : IValueObject
+public record Money : IValueObject
 {
-    public decimal Value { get; private set; }
-    public Currency Currency { get; private set; }
+    public decimal Value { get; private init; }
+    public Currency Currency { get; private init; }
 
     private Money(decimal value, Currency currency)
     {
