@@ -5,7 +5,7 @@ internal sealed record DatabaseSettings
 {
     public const string SectionName = "DatabaseSettings";
 
-    [Required, Url]
+    [Required, MinLength(1)]
     public required string ConnectionString { get; init; }
     public int CommandTimeoutInSeconds { get; init; } = 180;
 }

@@ -1,5 +1,7 @@
 ﻿using FinnHub.PortfolioManagement.Application.Abstractions;
+using FinnHub.PortfolioManagement.Domain.Aggregates.Repositories;
 using FinnHub.PortfolioManagement.Infrastructure.Persistence.Context;
+using FinnHub.PortfolioManagement.Infrastructure.Persistence.Repositories;
 using FinnHub.PortfolioManagement.Infrastructure.Persistence.Settings;
 using FinnHub.PortfolioManagement.Infrastructure.Persistence.Shared;
 
@@ -24,6 +26,7 @@ public static class DependencyInjectionConfiguration
         services.AddHealthChecksConfiguration(settings);
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<IPortfolioRepository, PortfolioRepository>();
 
         return services;
     }
