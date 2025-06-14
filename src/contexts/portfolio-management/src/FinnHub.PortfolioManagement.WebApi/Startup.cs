@@ -11,13 +11,12 @@ public static class StartupHelper
     public static void ConfigureServices(WebApplicationBuilder builder)
     {
         builder.AddTelemetryConfiguration();
-        builder.Services.AddHttpContextAccessor();
+
         builder.Services.AddControllers();
+
         builder.Services.AddOpenApiConfiguration();
         builder.Services.AddPersistenceConfiguration(builder.Configuration);
-        // TODO: Add HttpContext in authentication layer
-        builder.Services.AddHttpContextAccessor();
-        builder.Services.AddAuthenticationConfiguration();
+        builder.Services.AddAuthenticationConfiguration(builder.Configuration);
         builder.Services.AddApplicationConfiguration();
     }
 
@@ -28,6 +27,8 @@ public static class StartupHelper
         app.UseOpenApiConfiguration();
 
         app.UseHttpsRedirection();
+
+        app.UseAuthentication();
 
         app.UseAuthorization();
 

@@ -4,11 +4,13 @@ using FinnHub.PortfolioManagement.Application.Commands.CreatePortfolio;
 
 using MediatR;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinnHub.PortfolioManagement.WebApi.Controllers;
 
 [Route("api/v1/portfolios")]
+[Authorize]
 public class PortfolioController(ISender sender) : ControllerBase
 {
     [HttpPost]

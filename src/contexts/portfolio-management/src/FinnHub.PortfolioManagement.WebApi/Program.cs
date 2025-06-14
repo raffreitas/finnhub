@@ -14,3 +14,8 @@ catch (Exception ex)
     var logger = factory.CreateLogger<WebApplication>();
     logger.LogCritical(ex, "An unhandled exception occurred during application startup.");
 }
+
+public partial class Program
+{
+    protected Program() { }
+};
