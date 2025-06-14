@@ -1,4 +1,6 @@
-﻿using FinnHub.PortfolioManagement.Application.Abstractions;
+﻿using System.Reflection;
+
+using FinnHub.PortfolioManagement.Application.Abstractions;
 using FinnHub.PortfolioManagement.Domain.Aggregates.Repositories;
 using FinnHub.PortfolioManagement.Infrastructure.Persistence.Context;
 using FinnHub.PortfolioManagement.Infrastructure.Persistence.Repositories;

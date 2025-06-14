@@ -19,4 +19,8 @@
     <ProjectReference Include="..\FinnHub.PortfolioManagement.Infrastructure.Messaging\FinnHub.PortfolioManagement.Infrastructure.Messaging.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="FinnHub.PortfolioManagement.WebApi.Tests" />
+  </ItemGroup>
+
 </Project>
