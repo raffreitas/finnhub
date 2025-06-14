@@ -34,8 +34,8 @@ internal sealed class CreatePortfolioHandler : IRequestHandler<CreatePortfolioRe
 
         var currentUserId = _userContext.UserId;
 
-        var nameIsAvailable = await _portfolioRepository.NameExistsAsync(currentUserId, request.Name, cancellationToken);
-        if (!nameIsAvailable)
+        var nameIsTaken = await _portfolioRepository.NameExistsAsync(currentUserId, request.Name, cancellationToken);
+        if (nameIsTaken)
             return Result<CreatePortfolioResponse>.Failure("A portfolio with this name already exists.");
 
         var portfolio = Portfolio.Create(currentUserId, request.Name, request.Description);

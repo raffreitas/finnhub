@@ -16,4 +16,8 @@
     <ProjectReference Include="..\FinnHub.PortfolioManagement.Domain\FinnHub.PortfolioManagement.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="FinnHub.PortfolioManagement.Application.Tests" />
+  </ItemGroup>
+
 </Project>
