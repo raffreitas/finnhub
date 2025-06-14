@@ -92,7 +92,7 @@ public class CreatePortfolioHandlerTests(CommandsBaseFixture fixture) : IClassFi
         result.IsSuccess.ShouldBeTrue();
         result.Errors.ShouldBeEmpty();
         result.Value.ShouldNotBeNull();
-        result.Value.Id.ShouldBe(Guid.Empty);
+        result.Value.Id.ShouldNotBe(Guid.Empty);
 
         await _portfolioRepository
             .Received(1)

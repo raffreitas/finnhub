@@ -16,7 +16,11 @@ public sealed class Position : Entity
     public DateTimeOffset LastUpdated { get; private set; }
     public Guid PortfolioId { get; private set; }
 
+    #region EF Constructor
+#pragma warning disable CS8618
     private Position() { }
+#pragma warning restore CS8618
+    #endregion
 
     private Position(AssetSymbol assetSymbol, Quantity quantity, Money averageCost)
     {

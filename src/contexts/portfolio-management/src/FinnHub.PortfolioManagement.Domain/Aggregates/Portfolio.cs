@@ -25,7 +25,11 @@ public sealed class Portfolio : AggregateRoot
     public IReadOnlyList<Position> Positions => _positions.AsReadOnly();
     public IReadOnlyList<Transaction> Transactions => _transactions.AsReadOnly();
 
+    #region EF Constructor
+#pragma warning disable CS8618
     private Portfolio() { }
+#pragma warning restore CS8618
+    #endregion
 
     private Portfolio(Guid userId, string name, string? description = null)
     {

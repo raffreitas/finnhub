@@ -19,7 +19,11 @@ public sealed class Transaction : Entity
     public Money? CurrentMarketValue { get; private set; }
     public bool IsSettled { get; private set; }
 
+    #region EF Constructor
+#pragma warning disable CS8618
     private Transaction() { }
+#pragma warning restore CS8618
+    #endregion
 
     private Transaction(
         Guid portfolioId,
