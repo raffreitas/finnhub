@@ -8,18 +8,29 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0-alpine AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
-COPY */**/*.csproj ./
-RUN for file in $(ls *.csproj); do mkdir -p ${file%.*}/ && mv $file ${file%.*}/; done
+# Copy project files for restore (build context should be solution root)
+COPY ["src/FinnHub.PortfolioManagement.WebApi/FinnHub.PortfolioManagement.WebApi.csproj", "FinnHub.PortfolioManagement.WebApi/"]
+COPY ["src/FinnHub.PortfolioManagement.Application/FinnHub.PortfolioManagement.Application.csproj", "FinnHub.PortfolioManagement.Application/"]
+COPY ["src/FinnHub.PortfolioManagement.Domain/FinnHub.PortfolioManagement.Domain.csproj", "FinnHub.PortfolioManagement.Domain/"]
+COPY ["src/FinnHub.PortfolioManagement.Infrastructure.Authentication/FinnHub.PortfolioManagement.Infrastructure.Authentication.csproj", "FinnHub.PortfolioManagement.Infrastructure.Authentication/"]
+COPY ["src/FinnHub.PortfolioManagement.Infrastructure.Caching/FinnHub.PortfolioManagement.Infrastructure.Caching.csproj", "FinnHub.PortfolioManagement.Infrastructure.Caching/"]
+COPY ["src/FinnHub.PortfolioManagement.Infrastructure.Logger/FinnHub.PortfolioManagement.Infrastructure.Logger.csproj", "FinnHub.PortfolioManagement.Infrastructure.Logger/"]
+COPY ["src/FinnHub.PortfolioManagement.Infrastructure.Messaging/FinnHub.PortfolioManagement.Infrastructure.Messaging.csproj", "FinnHub.PortfolioManagement.Infrastructure.Messaging/"]
+COPY ["src/FinnHub.PortfolioManagement.Infrastructure.Persistence/FinnHub.PortfolioManagement.Infrastructure.Persistence.csproj", "FinnHub.PortfolioManagement.Infrastructure.Persistence/"]
 
+# Restore dependencies
 RUN dotnet restore "FinnHub.PortfolioManagement.WebApi/FinnHub.PortfolioManagement.WebApi.csproj"
-COPY . .
 
+# Copy all source code
+COPY ["src/", "."]
+
+# Build the application  
 WORKDIR "/src/FinnHub.PortfolioManagement.WebApi"
-RUN dotnet build "./FinnHub.PortfolioManagement.WebApi.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "FinnHub.PortfolioManagement.WebApi.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./FinnHub.PortfolioManagement.WebApi.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "FinnHub.PortfolioManagement.WebApi.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
