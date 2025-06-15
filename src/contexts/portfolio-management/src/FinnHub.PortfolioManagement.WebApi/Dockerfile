@@ -8,7 +8,6 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0-alpine AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
-# Copy project files for restore (build context should be solution root)
 COPY ["src/FinnHub.PortfolioManagement.WebApi/FinnHub.PortfolioManagement.WebApi.csproj", "FinnHub.PortfolioManagement.WebApi/"]
 COPY ["src/FinnHub.PortfolioManagement.Application/FinnHub.PortfolioManagement.Application.csproj", "FinnHub.PortfolioManagement.Application/"]
 COPY ["src/FinnHub.PortfolioManagement.Domain/FinnHub.PortfolioManagement.Domain.csproj", "FinnHub.PortfolioManagement.Domain/"]
@@ -18,13 +17,10 @@ COPY ["src/FinnHub.PortfolioManagement.Infrastructure.Logger/FinnHub.PortfolioMa
 COPY ["src/FinnHub.PortfolioManagement.Infrastructure.Messaging/FinnHub.PortfolioManagement.Infrastructure.Messaging.csproj", "FinnHub.PortfolioManagement.Infrastructure.Messaging/"]
 COPY ["src/FinnHub.PortfolioManagement.Infrastructure.Persistence/FinnHub.PortfolioManagement.Infrastructure.Persistence.csproj", "FinnHub.PortfolioManagement.Infrastructure.Persistence/"]
 
-# Restore dependencies
 RUN dotnet restore "FinnHub.PortfolioManagement.WebApi/FinnHub.PortfolioManagement.WebApi.csproj"
 
-# Copy all source code
 COPY ["src/", "."]
 
-# Build the application  
 WORKDIR "/src/FinnHub.PortfolioManagement.WebApi"
 RUN dotnet build "FinnHub.PortfolioManagement.WebApi.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
