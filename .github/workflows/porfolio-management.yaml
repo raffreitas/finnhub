@@ -53,5 +53,6 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: ./src/contexts/portfolio-management
+          file: ./src/contexts/portfolio-management/src/FinnHub.PortfolioManagement.WebApi/Dockerfile
           push: true
           tags: raffreitas/finnhub-portfolio-management:latest
