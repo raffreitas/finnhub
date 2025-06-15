@@ -11,6 +11,9 @@ public record PaginatedResult<T>
 
     public PaginatedResult(int pageNumber, int pageSize, int totalCount, IEnumerable<T> items)
     {
+        if (pageNumber < 1 || pageSize < 1)
+            throw new InvalidOperationException("Page number and page size must be greater than or equal to 1.");
+
         Page = pageNumber;
         PageSize = pageSize;
         TotalCount = totalCount;
