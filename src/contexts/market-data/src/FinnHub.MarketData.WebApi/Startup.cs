@@ -10,11 +10,11 @@ public static class StartupHelper
 
         builder.Services.AddCorsConfiguration();
 
-        builder.Services.AddAuthenticationConfiguration();
+        builder.Services.AddAuthenticationConfiguration(builder.Configuration);
 
         builder.Services.AddHealthCheckConfiguration();
 
-        builder.Services.AddFastEndpointsConfiguration(builder.Configuration);
+        builder.Services.AddEndpointsConfiguration();
 
         builder.Services.AddOpenApiConfiguration();
     }
@@ -29,7 +29,7 @@ public static class StartupHelper
 
         app.UseHealthCheckConfiguration();
 
-        app.UseFastEndpointsConfiguration();
+        app.UseEndpointsConfiguration();
 
         app.UseOpenApiConfiguration();
 

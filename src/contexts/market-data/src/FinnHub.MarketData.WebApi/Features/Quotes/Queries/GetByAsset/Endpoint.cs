@@ -1,18 +1,11 @@
-﻿using FastEndpoints;
+﻿using FinnHub.MarketData.WebApi.Shared.Endpoints;
 
 namespace FinnHub.MarketData.WebApi.Features.Quotes.Queries.GetByAsset;
 
-public sealed class Endpoint : Endpoint<Request, Response>
+public sealed class Endpoint : IEndpoint
 {
-    public override void Configure()
+    public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        Get("/quotes/{AssetSymbol}");
-        Version(1);
-        AllowAnonymous();
-    }
-
-    public override async Task HandleAsync(Request req, CancellationToken ct)
-    {
-        await SendNotFoundAsync(cancellation: ct);
+        app.MapGet("/quotes/{assetSymbol}", (string assetSymbol) => Results.NotFound()).RequireAuthorization();
     }
 }

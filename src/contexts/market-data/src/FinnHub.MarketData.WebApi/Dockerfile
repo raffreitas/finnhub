@@ -12,19 +12,19 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["src/FinnHub.MarketData.Api/FinnHub.MarketData.Api.csproj", "src/FinnHub.MarketData.Api/"]
-RUN dotnet restore "./src/FinnHub.MarketData.Api/FinnHub.MarketData.Api.csproj"
+COPY ["src/FinnHub.MarketData.WebApi/FinnHub.MarketData.WebApi.csproj", "src/FinnHub.MarketData.WebApi/"]
+RUN dotnet restore "./src/FinnHub.MarketData.WebApi/FinnHub.MarketData.WebApi.csproj"
 COPY . .
-WORKDIR "/src/src/FinnHub.MarketData.Api"
-RUN dotnet build "./FinnHub.MarketData.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/src/FinnHub.MarketData.WebApi"
+RUN dotnet build "./FinnHub.MarketData.WebApi.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # This stage is used to publish the service project to be copied to the final stage
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./FinnHub.MarketData.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./FinnHub.MarketData.WebApi.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 # This stage is used in production or when running from VS in regular mode (Default when not using the Debug configuration)
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "FinnHub.MarketData.Api.dll"]
+ENTRYPOINT ["dotnet", "FinnHub.MarketData.WebApi.dll"]
