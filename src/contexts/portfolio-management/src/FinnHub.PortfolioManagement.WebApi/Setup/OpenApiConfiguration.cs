@@ -7,7 +7,7 @@ using Scalar.AspNetCore;
 
 namespace FinnHub.PortfolioManagement.WebApi.Setup;
 
-public static class OpenApiConfiguration
+internal static class OpenApiConfiguration
 {
     public static IServiceCollection AddOpenApiConfiguration(this IServiceCollection services)
     {

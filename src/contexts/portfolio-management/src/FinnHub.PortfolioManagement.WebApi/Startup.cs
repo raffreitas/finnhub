@@ -14,6 +14,8 @@ public static class StartupHelper
 
         builder.Services.AddControllers();
 
+        builder.Services.AddCorsConfiguration();
+
         builder.Services.AddOpenApiConfiguration();
         builder.Services.AddPersistenceConfiguration(builder.Configuration);
         builder.Services.AddAuthenticationConfiguration(builder.Configuration);
@@ -25,6 +27,8 @@ public static class StartupHelper
         app.UseTelemetryConfiguration();
 
         app.UseOpenApiConfiguration();
+
+        app.UseCorsConfiguration();
 
         app.UseHttpsRedirection();
 
