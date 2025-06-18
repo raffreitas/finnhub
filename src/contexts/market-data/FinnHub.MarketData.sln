@@ -3,11 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinnHub.MarketData.Core", "src\FinnHub.MarketData.Core\FinnHub.MarketData.Core.csproj", "{7E069A70-4DE0-427E-B899-8DC62D610077}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinnHub.MarketData.WebApi", "src\FinnHub.MarketData.WebApi\FinnHub.MarketData.WebApi.csproj", "{5C641F8D-14F7-D2F1-2E6E-795F774EC1C2}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinnHub.MarketData.Infrastructure", "src\FinnHub.MarketData.Infrastructure\FinnHub.MarketData.Infrastructure.csproj", "{068CE3AB-74FE-479F-8BA2-D75FC2FBA8A4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinnHub.MarketData.WebApi.Tests", "test\FinnHub.MarketData.WebApi.Tests\FinnHub.MarketData.WebApi.Tests.csproj", "{6D9509D9-C537-4E81-8419-FFE7D9ADB5D1}"
 EndProject
@@ -21,18 +17,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7E069A70-4DE0-427E-B899-8DC62D610077}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7E069A70-4DE0-427E-B899-8DC62D610077}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7E069A70-4DE0-427E-B899-8DC62D610077}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7E069A70-4DE0-427E-B899-8DC62D610077}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5C641F8D-14F7-D2F1-2E6E-795F774EC1C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5C641F8D-14F7-D2F1-2E6E-795F774EC1C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C641F8D-14F7-D2F1-2E6E-795F774EC1C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5C641F8D-14F7-D2F1-2E6E-795F774EC1C2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{068CE3AB-74FE-479F-8BA2-D75FC2FBA8A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{068CE3AB-74FE-479F-8BA2-D75FC2FBA8A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{068CE3AB-74FE-479F-8BA2-D75FC2FBA8A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{068CE3AB-74FE-479F-8BA2-D75FC2FBA8A4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6D9509D9-C537-4E81-8419-FFE7D9ADB5D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6D9509D9-C537-4E81-8419-FFE7D9ADB5D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D9509D9-C537-4E81-8419-FFE7D9ADB5D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -42,9 +30,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{7E069A70-4DE0-427E-B899-8DC62D610077} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{5C641F8D-14F7-D2F1-2E6E-795F774EC1C2} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
-		{068CE3AB-74FE-479F-8BA2-D75FC2FBA8A4} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{6D9509D9-C537-4E81-8419-FFE7D9ADB5D1} = {33A865AC-170A-4A6B-88E6-6FE9F38A19F8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

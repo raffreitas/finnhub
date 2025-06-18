@@ -1,9 +1,0 @@
-services:
-  finnhub.portfolio.db:
-    image: bitnami/postgresql:16
-    container_name: finnhub.portfolio.db
-    ports:
-      - "5432:5432"
-    environment:
-      - POSTGRESQL_USERNAME=postgres
-      - POSTGRESQL_PASSWORD=postgres
