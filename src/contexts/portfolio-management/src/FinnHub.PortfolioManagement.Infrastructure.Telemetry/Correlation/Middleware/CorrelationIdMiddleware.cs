@@ -41,26 +41,27 @@ internal sealed class CorrelationIdMiddleware(
 
     private static void IncludeCorrelationIdRequestHeader(HttpContext context, string correlationId)
     {
-        if (!context.Response.Headers.ContainsKey("X-Correlation-ID"))
-            context.Response.Headers.Append("X-Correlation-ID", correlationId);
-        else
-            context.Response.Headers["X-Correlation-ID"] = correlationId;
+        SetCorrelationIdHeader(context.Response.Headers, correlationId);
     }
 
     private static void IncludeCorrelationIdResponseHeader(HttpResponse response, string correlationId)
     {
-        if (!response.Headers.ContainsKey("X-Correlation-ID"))
-            response.Headers.Append("X-Correlation-ID", correlationId);
-        else
-            response.Headers["X-Correlation-ID"] = correlationId;
+        SetCorrelationIdHeader(response.Headers, correlationId);
     }
 
     private static void IncludeInResponse(HttpContext context, string correlationId)
     {
         context.Response.OnStarting(() =>
         {
-            context.Response.Headers["X-Correlation-ID"] = correlationId;
+            SetCorrelationIdHeader(context.Response.Headers, correlationId);
             return Task.CompletedTask;
         });
+    }
+    private static void SetCorrelationIdHeader(IHeaderDictionary headers, string correlationId)
+    {
+        if (!headers.ContainsKey("X-Correlation-ID"))
+            headers.Append("X-Correlation-ID", correlationId);
+        else
+            headers["X-Correlation-ID"] = correlationId;
     }
 }
