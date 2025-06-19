@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
 namespace FinnHub.PortfolioManagement.Infrastructure.Telemetry.Middleware;
-internal sealed class RequestLoggingMiddleware(RequestDelegate next, ILogger<LogScopedMiddleware> logger)
+internal sealed class RequestLoggingMiddleware(RequestDelegate next, ILogger<RequestLoggingMiddleware> logger)
 {
     public async Task InvokeAsync(HttpContext context)
     {

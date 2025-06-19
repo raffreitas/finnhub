@@ -1,4 +1,6 @@
-﻿using FinnHub.PortfolioManagement.Infrastructure.Telemetry.Middleware;
+﻿using FinnHub.PortfolioManagement.Infrastructure.Telemetry.Correlation.Middleware;
+using FinnHub.PortfolioManagement.Infrastructure.Telemetry.Correlation.Setup;
+using FinnHub.PortfolioManagement.Infrastructure.Telemetry.Middleware;
 using FinnHub.PortfolioManagement.Infrastructure.Telemetry.Settings;
 
 using Microsoft.AspNetCore.Builder;
@@ -29,12 +31,14 @@ public static class DependencyInjectionConfiguration
             services.ConfigureOpenTelemetry(settings);
         }
 
+        services.AddCorrelationConfiguration();
+
         return builder;
     }
 
     public static WebApplication UseTelemetryConfiguration(this WebApplication app)
     {
-        app.UseMiddleware<LogScopedMiddleware>();
+        app.UseMiddleware<CorrelationIdMiddleware>();
         app.UseMiddleware<RequestLoggingMiddleware>();
         return app;
     }
