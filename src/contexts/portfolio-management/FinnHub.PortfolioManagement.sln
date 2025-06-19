@@ -19,14 +19,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4 - Infrastructure", "4 - I
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinnHub.PortfolioManagement.Infrastructure.Persistence", "src\FinnHub.PortfolioManagement.Infrastructure.Persistence\FinnHub.PortfolioManagement.Infrastructure.Persistence.csproj", "{75BC1C2A-8540-59B4-9914-BD26826AEF3D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinnHub.PortfolioManagement.Infrastructure.Logger", "src\FinnHub.PortfolioManagement.Infrastructure.Logger\FinnHub.PortfolioManagement.Infrastructure.Logger.csproj", "{AFFF254B-5F4F-440B-A509-6A8628A7AA47}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinnHub.PortfolioManagement.Infrastructure.Caching", "src\FinnHub.PortfolioManagement.Infrastructure.Caching\FinnHub.PortfolioManagement.Infrastructure.Caching.csproj", "{2B0EF4FC-8CC3-48C2-915C-423600880FFE}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}"
-	ProjectSection(SolutionItems) = preProject
-		docker-compose.yaml = docker-compose.yaml
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5 - Tests", "5 - Tests", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
@@ -39,6 +32,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinnHub.PortfolioManagement.WebApi.Tests", "test\FinnHub.PortfolioManagement.WebApi.Tests\FinnHub.PortfolioManagement.WebApi.Tests.csproj", "{2FE74A99-AF28-4603-B5B3-DD7A8691EFC4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinnHub.PortfolioManagement.Infrastructure.Authentication", "src\FinnHub.PortfolioManagement.Infrastructure.Authentication\FinnHub.PortfolioManagement.Infrastructure.Authentication.csproj", "{6C7860BA-35E4-4A7C-AC46-85E07AEFED63}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinnHub.PortfolioManagement.Infrastructure.Telemetry", "src\FinnHub.PortfolioManagement.Infrastructure.Telemetry\FinnHub.PortfolioManagement.Infrastructure.Telemetry.csproj", "{CF5A1104-77D3-9D4E-0229-9B4FB855494B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -62,10 +57,6 @@ Global
 		{75BC1C2A-8540-59B4-9914-BD26826AEF3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{75BC1C2A-8540-59B4-9914-BD26826AEF3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{75BC1C2A-8540-59B4-9914-BD26826AEF3D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AFFF254B-5F4F-440B-A509-6A8628A7AA47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AFFF254B-5F4F-440B-A509-6A8628A7AA47}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AFFF254B-5F4F-440B-A509-6A8628A7AA47}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AFFF254B-5F4F-440B-A509-6A8628A7AA47}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2B0EF4FC-8CC3-48C2-915C-423600880FFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2B0EF4FC-8CC3-48C2-915C-423600880FFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B0EF4FC-8CC3-48C2-915C-423600880FFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -90,6 +81,10 @@ Global
 		{6C7860BA-35E4-4A7C-AC46-85E07AEFED63}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C7860BA-35E4-4A7C-AC46-85E07AEFED63}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C7860BA-35E4-4A7C-AC46-85E07AEFED63}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF5A1104-77D3-9D4E-0229-9B4FB855494B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF5A1104-77D3-9D4E-0229-9B4FB855494B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF5A1104-77D3-9D4E-0229-9B4FB855494B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF5A1104-77D3-9D4E-0229-9B4FB855494B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -99,13 +94,13 @@ Global
 		{151E6624-6037-8E36-9DA9-4BAEDDE485BE} = {D9655C50-1F1F-43DF-8C86-DE470F88B413}
 		{0ADCA41B-D3BD-245C-4108-8F57C1D59D53} = {584CD3BF-6946-42C9-9BA4-230E8C604497}
 		{75BC1C2A-8540-59B4-9914-BD26826AEF3D} = {7E3C9E67-D09E-43D7-B88C-1754FB0B3A83}
-		{AFFF254B-5F4F-440B-A509-6A8628A7AA47} = {7E3C9E67-D09E-43D7-B88C-1754FB0B3A83}
 		{2B0EF4FC-8CC3-48C2-915C-423600880FFE} = {7E3C9E67-D09E-43D7-B88C-1754FB0B3A83}
 		{B9C27A90-B542-4AB0-90F6-27BF5531AB2C} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{293F46C4-901E-4307-A52B-D2DE595B1333} = {7E3C9E67-D09E-43D7-B88C-1754FB0B3A83}
 		{9B51BEE5-EF9E-4BDE-A7BC-3A4F53E09D18} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{2FE74A99-AF28-4603-B5B3-DD7A8691EFC4} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{6C7860BA-35E4-4A7C-AC46-85E07AEFED63} = {7E3C9E67-D09E-43D7-B88C-1754FB0B3A83}
+		{CF5A1104-77D3-9D4E-0229-9B4FB855494B} = {7E3C9E67-D09E-43D7-B88C-1754FB0B3A83}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {77EDBFBC-F0EF-4D34-9EC4-AC85A96374D9}

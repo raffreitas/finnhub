@@ -2,8 +2,8 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
 
-namespace FinnHub.PortfolioManagement.Infrastructure.Logger.Logging.Middlewares;
-internal class LogScopedMiddleware(RequestDelegate next, ILogger<LogScopedMiddleware> logger)
+namespace FinnHub.PortfolioManagement.Infrastructure.Telemetry.Middleware;
+internal sealed class LogScopedMiddleware(RequestDelegate next, ILogger<LogScopedMiddleware> logger)
 {
     public async Task InvokeAsync(HttpContext context)
     {

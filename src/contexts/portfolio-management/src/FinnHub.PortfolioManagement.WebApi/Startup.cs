@@ -1,7 +1,7 @@
 ﻿using FinnHub.PortfolioManagement.Application.Setup;
 using FinnHub.PortfolioManagement.Infrastructure.Authentication.Setup;
-using FinnHub.PortfolioManagement.Infrastructure.Logger.Setup;
 using FinnHub.PortfolioManagement.Infrastructure.Persistence.Setup;
+using FinnHub.PortfolioManagement.Infrastructure.Telemetry.Setup;
 using FinnHub.PortfolioManagement.WebApi.Setup;
 
 namespace FinnHub.PortfolioManagement.WebApi;

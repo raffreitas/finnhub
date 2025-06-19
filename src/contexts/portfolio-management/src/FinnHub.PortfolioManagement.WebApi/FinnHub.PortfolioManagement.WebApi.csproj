@@ -20,8 +20,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FinnHub.PortfolioManagement.Infrastructure.Authentication\FinnHub.PortfolioManagement.Infrastructure.Authentication.csproj" />
-    <ProjectReference Include="..\FinnHub.PortfolioManagement.Infrastructure.Logger\FinnHub.PortfolioManagement.Infrastructure.Logger.csproj" />
     <ProjectReference Include="..\FinnHub.PortfolioManagement.Infrastructure.Persistence\FinnHub.PortfolioManagement.Infrastructure.Persistence.csproj" />
+    <ProjectReference Include="..\FinnHub.PortfolioManagement.Infrastructure.Telemetry\FinnHub.PortfolioManagement.Infrastructure.Telemetry.csproj" />
   </ItemGroup>
 
 </Project>

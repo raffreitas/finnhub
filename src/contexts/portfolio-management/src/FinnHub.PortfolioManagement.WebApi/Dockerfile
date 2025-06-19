@@ -13,7 +13,7 @@ COPY ["src/FinnHub.PortfolioManagement.Application/FinnHub.PortfolioManagement.A
 COPY ["src/FinnHub.PortfolioManagement.Domain/FinnHub.PortfolioManagement.Domain.csproj", "FinnHub.PortfolioManagement.Domain/"]
 COPY ["src/FinnHub.PortfolioManagement.Infrastructure.Authentication/FinnHub.PortfolioManagement.Infrastructure.Authentication.csproj", "FinnHub.PortfolioManagement.Infrastructure.Authentication/"]
 COPY ["src/FinnHub.PortfolioManagement.Infrastructure.Caching/FinnHub.PortfolioManagement.Infrastructure.Caching.csproj", "FinnHub.PortfolioManagement.Infrastructure.Caching/"]
-COPY ["src/FinnHub.PortfolioManagement.Infrastructure.Logger/FinnHub.PortfolioManagement.Infrastructure.Logger.csproj", "FinnHub.PortfolioManagement.Infrastructure.Logger/"]
+COPY ["src/FinnHub.PortfolioManagement.Infrastructure.Telemetry/FinnHub.PortfolioManagement.Infrastructure.Telemetry.csproj", "FinnHub.PortfolioManagement.Infrastructure.Telemetry/"]
 COPY ["src/FinnHub.PortfolioManagement.Infrastructure.Messaging/FinnHub.PortfolioManagement.Infrastructure.Messaging.csproj", "FinnHub.PortfolioManagement.Infrastructure.Messaging/"]
 COPY ["src/FinnHub.PortfolioManagement.Infrastructure.Persistence/FinnHub.PortfolioManagement.Infrastructure.Persistence.csproj", "FinnHub.PortfolioManagement.Infrastructure.Persistence/"]
 
