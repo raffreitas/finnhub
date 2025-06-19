@@ -1,7 +1,7 @@
 ﻿using FinnHub.MarketData.WebApi.Features.Assets.Events;
-using FinnHub.MarketData.WebApi.Shared.Abstractions;
-using FinnHub.MarketData.WebApi.Shared.Enums;
-using FinnHub.MarketData.WebApi.Shared.ValueObjects;
+using FinnHub.MarketData.WebApi.Shared.Domain.Abstractions;
+using FinnHub.MarketData.WebApi.Shared.Domain.Enums;
+using FinnHub.MarketData.WebApi.Shared.Domain.ValueObjects;
 
 namespace FinnHub.MarketData.WebApi.Features.Assets.Entities;
 

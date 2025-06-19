@@ -1,4 +1,4 @@
-﻿using FinnHub.MarketData.WebApi.Shared.Abstractions;
+﻿using FinnHub.MarketData.WebApi.Shared.Domain.Abstractions;
 
 namespace FinnHub.MarketData.WebApi.Features.Assets.Events;
 

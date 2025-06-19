@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-using FinnHub.MarketData.WebApi.Shared.Endpoints;
+using FinnHub.MarketData.WebApi.Shared.Presentation.Endpoints;
 
 using Microsoft.Extensions.DependencyInjection.Extensions;
 

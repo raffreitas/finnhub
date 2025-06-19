@@ -1,4 +1,4 @@
-﻿using FinnHub.MarketData.WebApi.Shared.Endpoints;
+﻿using FinnHub.MarketData.WebApi.Shared.Presentation.Endpoints;
 
 namespace FinnHub.MarketData.WebApi.Features.Quotes.Queries.GetByAsset;
 
