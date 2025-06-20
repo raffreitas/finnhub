@@ -2,7 +2,7 @@
 
 namespace FinnHub.MarketData.WebApi.Features.Assets.Commands.CreateAsset;
 
-public sealed class CreateAssetEndpoint : IEndpoint
+internal sealed class CreateAssetEndpoint : IEndpoint
 {
     public sealed record class Request
     {

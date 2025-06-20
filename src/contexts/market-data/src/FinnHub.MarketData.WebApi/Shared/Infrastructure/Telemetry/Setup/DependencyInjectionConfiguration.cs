@@ -53,16 +53,11 @@ public static class DependencyInjectionConfiguration
         services.AddOpenTelemetry()
             .WithTracing(builder => builder
                 .AddSource(settings.ServiceName)
+                .AddSource("MongoDB.Driver.Core.Extensions.DiagnosticSources")
                 .SetResourceBuilder(resourceBuilder)
                 .AddAspNetCoreInstrumentation()
-                .AddEntityFrameworkCoreInstrumentation(cfg => cfg.SetDbStatementForText = true)
-                .AddOtlpExporter(cfg =>
-                {
-                    cfg.Endpoint = new Uri(openTelemetryEndpoint);
-                    cfg.Protocol = OpenTelemetry.Exporter.OtlpExportProtocol.Grpc;
-                }))
-            .WithLogging(builder => builder
-                .SetResourceBuilder(resourceBuilder)
+                .AddHttpClientInstrumentation()
+                .AddSource()
                 .AddOtlpExporter(cfg =>
                 {
                     cfg.Endpoint = new Uri(openTelemetryEndpoint);
@@ -87,11 +82,18 @@ public static class DependencyInjectionConfiguration
         var endpoint = settings.OpenTelemetryEndpoint
             ?? throw new ArgumentException($"{nameof(TelemetrySettings.OpenTelemetryEndpoint)} should be configured.");
 
+        var resourceBuilder = ResourceBuilder.CreateDefault()
+            .AddService(
+                serviceName: settings.ServiceName,
+                serviceVersion: settings.ServiceVersion
+            );
+
         builder.Logging.AddOpenTelemetry(options =>
         {
             options.IncludeScopes = true;
             options.ParseStateValues = true;
             options.IncludeFormattedMessage = true;
+            options.SetResourceBuilder(resourceBuilder);
             options.AddOtlpExporter(option =>
             {
                 option.Endpoint = new Uri(endpoint);
