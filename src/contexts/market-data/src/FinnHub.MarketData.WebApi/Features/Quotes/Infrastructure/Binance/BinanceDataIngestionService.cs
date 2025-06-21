@@ -1,4 +1,5 @@
-﻿using System.Net.WebSockets;
+﻿using System.Diagnostics;
+using System.Net.WebSockets;
 using System.Text;
 using System.Text.Json;
 
@@ -20,7 +21,7 @@ internal sealed class BinanceDataIngestionService(
 {
     private readonly BinanceSettings binanceSettings = options.Value;
     private readonly ClientWebSocket _webSocket = new();
-
+    private readonly ActivitySource _activitySource = new("FinnHub.MarketData.Binance");
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         while (!stoppingToken.IsCancellationRequested)
@@ -62,10 +63,16 @@ internal sealed class BinanceDataIngestionService(
 
     private async Task ProcessWebSocketMessage(string message)
     {
+        using var activity = _activitySource.StartActivity("process_binance_message");
+
         try
         {
             var marketData = JsonSerializer.Deserialize<Ticker24HrModel>(message);
             if (marketData is null) return;
+
+            activity?.SetTag("binance.symbol", marketData.Symbol);
+            activity?.SetTag("binance.price", marketData.LastPrice);
+            activity?.SetTag("binance.event_time", marketData.EventTime);
 
             var quoteEvent = new MarketDataIngestedEvent(
                 Id: Guid.NewGuid(),
@@ -82,10 +89,14 @@ internal sealed class BinanceDataIngestionService(
             );
 
             await messageBus.PublishAsync(quoteEvent);
+
+            activity?.SetStatus(ActivityStatusCode.Ok);
         }
         catch (Exception ex)
         {
             logger.LogError(ex, "Error processing WebSocket message: {Message}", message);
+            activity?.SetStatus(ActivityStatusCode.Error, ex.Message);
+            activity?.AddException(ex);
         }
     }
 }

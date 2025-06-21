@@ -1,4 +1,5 @@
 ﻿using System.Collections.Concurrent;
+using System.Diagnostics;
 using System.Text;
 using System.Text.Json;
 
@@ -6,6 +7,9 @@ using FinnHub.MarketData.WebApi.Shared.Infrastructure.Messaging.Settings;
 using FinnHub.MarketData.WebApi.Shared.Infrastructure.Telemetry.Correlation.Context;
 
 using Microsoft.Extensions.Options;
+
+using OpenTelemetry;
+using OpenTelemetry.Context.Propagation;
 
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
@@ -20,6 +24,8 @@ internal sealed class RabbitMQMessageBus : IMessageBus, IDisposable
     private readonly ICorrelationContextAccessor _correlationContextAccessor;
     private readonly ConcurrentDictionary<string, bool> _initializedInfrastructure = new();
     private readonly SemaphoreSlim _initSemaphore = new(1, 1);
+    private readonly ActivitySource _activitySource = new("FinnHub.MarketData.Messaging");
+    private readonly TextMapPropagator _propagator = Propagators.DefaultTextMapPropagator;
 
     public RabbitMQMessageBus(
         RabbitMQConnectionManager connectionManager,
@@ -95,6 +101,8 @@ internal sealed class RabbitMQMessageBus : IMessageBus, IDisposable
 
     public async Task PublishAsync<T>(T message, string? routingKey = null, CancellationToken cancellationToken = default)
     {
+        using var activity = _activitySource.StartActivity($"publish {typeof(T).Name}");
+
         await EnsureInfrastructureAsync<T>(cancellationToken);
 
         var messageType = typeof(T).Name;
@@ -109,11 +117,25 @@ internal sealed class RabbitMQMessageBus : IMessageBus, IDisposable
             CorrelationId = _correlationContextAccessor?.Context?.CorrelationId ?? Guid.NewGuid().ToString(),
             MessageId = Guid.NewGuid().ToString(),
             Type = messageType,
-            Timestamp = new AmqpTimestamp(DateTimeOffset.UtcNow.ToUnixTimeSeconds())
+            Timestamp = new AmqpTimestamp(DateTimeOffset.UtcNow.ToUnixTimeSeconds()),
+            Headers = new Dictionary<string, object?>()
         };
+
+        var propagationContext = new PropagationContext(
+            activity?.Context ?? Activity.Current?.Context ?? default,
+            Baggage.Current
+        );
+
+        _propagator.Inject(propagationContext, properties.Headers, (headers, key, value) => headers![key] = value);
 
         var jsonMessage = JsonSerializer.Serialize(message);
         var body = Encoding.UTF8.GetBytes(jsonMessage);
+
+        activity?.SetTag("messaging.system", "rabbitmq");
+        activity?.SetTag("messaging.destination", messageSettings.ExchangeName);
+        activity?.SetTag("messaging.destination_kind", "exchange");
+        activity?.SetTag("messaging.operation", "publish");
+        activity?.SetTag("messaging.message_type", messageType);
 
         await channel.BasicPublishAsync(
             exchange: messageSettings.ExchangeName,
@@ -137,6 +159,27 @@ internal sealed class RabbitMQMessageBus : IMessageBus, IDisposable
         var consumer = new AsyncEventingBasicConsumer(channel);
         consumer.ReceivedAsync += async (object sender, BasicDeliverEventArgs @event) =>
         {
+            // Extract trace context from message headers
+            var parentContext = _propagator.Extract(
+                default,
+                @event.BasicProperties.Headers ?? new Dictionary<string, object?>(),
+                (headers, key) => headers.TryGetValue(key, out var value) 
+                    ? [value?.ToString() ?? string.Empty] 
+                    : Array.Empty<string>());
+
+            using var activity = _activitySource.StartActivity(
+                $"consume {messageType}",
+                ActivityKind.Consumer,
+                parentContext.ActivityContext
+            );
+
+            activity?.SetTag("messaging.system", "rabbitmq");
+            activity?.SetTag("messaging.destination", messageConfig.QueueName);
+            activity?.SetTag("messaging.destination_kind", "queue");
+            activity?.SetTag("messaging.operation", "consume");
+            activity?.SetTag("messaging.message_type", messageType);
+            activity?.SetTag("messaging.correlation_id", @event.BasicProperties.CorrelationId);
+
             try
             {
                 var jsonMessage = Encoding.UTF8.GetString(@event.Body.Span);
@@ -146,11 +189,13 @@ internal sealed class RabbitMQMessageBus : IMessageBus, IDisposable
                 {
                     await handler(message, cancellationToken);
                     await channel.BasicAckAsync(@event.DeliveryTag, false, cancellationToken);
+                    activity?.SetStatus(ActivityStatusCode.Ok);
                 }
                 else
                 {
                     _logger.LogWarning("Failed to deserialize message of type {MessageType}", messageType);
                     await channel.BasicRejectAsync(@event.DeliveryTag, false, cancellationToken);
+                    activity?.SetStatus(ActivityStatusCode.Error, "Failed to deserialize message");
                 }
 
             }
@@ -158,6 +203,8 @@ internal sealed class RabbitMQMessageBus : IMessageBus, IDisposable
             {
                 _logger.LogError(ex, "Error processing message of type {MessageType}", messageType);
                 await channel.BasicRejectAsync(@event.DeliveryTag, requeue: false, cancellationToken);
+                activity?.SetStatus(ActivityStatusCode.Error, ex.Message);
+                activity?.AddException(ex);
             }
         };
 
@@ -167,11 +214,13 @@ internal sealed class RabbitMQMessageBus : IMessageBus, IDisposable
             consumer,
             cancellationToken
         );
+
         _logger.LogInformation("Subscribed to queue {QueueName} for message type {MessageType}", messageConfig.QueueName, messageType);
     }
 
     public void Dispose()
     {
+        _activitySource?.Dispose();
         _initSemaphore?.Dispose();
         _connectionManager?.Dispose();
     }

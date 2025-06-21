@@ -57,6 +57,9 @@ public static class DependencyInjectionConfiguration
         services.AddOpenTelemetry()
             .WithTracing(builder => builder
                 .AddSource(settings.ServiceName)
+                .AddSource("FinnHub.MarketData.Messaging")
+                .AddSource("FinnHub.MarketData.Binance")
+                .AddSource("FinnHub.MarketData.Sync")
                 .AddSource("MongoDB.Driver.Core.Extensions.DiagnosticSources")
                 .SetResourceBuilder(resourceBuilder)
                 .AddAspNetCoreInstrumentation()
