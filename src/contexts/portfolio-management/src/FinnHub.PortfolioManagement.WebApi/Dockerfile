@@ -8,6 +8,8 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0-alpine AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
+COPY ["../../../building-blocks/FinnHub.Shared.Core\FinnHub.Shared.Core.csproj", "FinnHub.Shared.Core/"]
+COPY ["../../../building-blocks/FinnHub.Shared.Kernel/FinnHub.Shared.Kernel.csproj", "FinnHub.Shared.Kernel/"]
 COPY ["src/FinnHub.PortfolioManagement.WebApi/FinnHub.PortfolioManagement.WebApi.csproj", "FinnHub.PortfolioManagement.WebApi/"]
 COPY ["src/FinnHub.PortfolioManagement.Application/FinnHub.PortfolioManagement.Application.csproj", "FinnHub.PortfolioManagement.Application/"]
 COPY ["src/FinnHub.PortfolioManagement.Domain/FinnHub.PortfolioManagement.Domain.csproj", "FinnHub.PortfolioManagement.Domain/"]
