@@ -1,5 +1,7 @@
-﻿using FinnHub.MarketData.WebApi.Features.Assets.Domain.Repositories;
-using FinnHub.MarketData.WebApi.Shared.Domain.Enums;
+﻿using FinnHub.MarketData.WebApi.Features.Assets.Domain.Enums;
+using FinnHub.MarketData.WebApi.Features.Assets.Domain.Repositories;
+using FinnHub.MarketData.WebApi.Features.Assets.Infrastructure.Repositories;
+using FinnHub.MarketData.WebApi.Shared.Extensions;
 using FinnHub.MarketData.WebApi.Shared.Infrastructure.Database.Settings;
 
 using MongoDB.Bson;
@@ -14,7 +16,7 @@ internal static class DependencyInjectionConfiguration
 {
     public static IServiceCollection AddDatabaseConfiguration(this IServiceCollection services, IConfiguration configuration)
     {
-        var settings = GetSettings(services, configuration);
+        var settings = services.GetAndConfigureSettings<DatabaseSettings>(configuration, DatabaseSettings.SectionName);
 
         services.AddSingleton<IMongoClient>(sp =>
         {
@@ -37,19 +39,5 @@ internal static class DependencyInjectionConfiguration
         services.AddScoped<IAssetRepository, AssetRepository>();
 
         return services;
-    }
-
-    private static DatabaseSettings GetSettings(IServiceCollection services, IConfiguration configuration)
-    {
-        services.AddOptions<DatabaseSettings>()
-            .BindConfiguration(DatabaseSettings.SectionName)
-            .ValidateDataAnnotations()
-            .ValidateOnStart();
-
-        var settings = configuration
-            .GetSection(DatabaseSettings.SectionName).Get<DatabaseSettings>()
-                ?? throw new ArgumentException($"{nameof(DatabaseSettings)} should be configured.");
-
-        return settings;
     }
 }

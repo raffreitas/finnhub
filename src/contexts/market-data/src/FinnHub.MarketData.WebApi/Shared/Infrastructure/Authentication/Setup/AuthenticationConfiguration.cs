@@ -1,17 +1,18 @@
 ﻿using System.Text;
 
+using FinnHub.MarketData.WebApi.Shared.Extensions;
 using FinnHub.MarketData.WebApi.Shared.Infrastructure.Authentication.Settings;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
-namespace FinnHub.MarketData.WebApi.Setup;
+namespace FinnHub.MarketData.WebApi.Shared.Infrastructure.Authentication.Setup;
 
 public static class AuthenticationConfiguration
 {
     public static IServiceCollection AddAuthenticationConfiguration(this IServiceCollection services, IConfiguration configuration)
     {
-        var settings = GetSettings(services, configuration);
+        var settings = services.GetAndConfigureSettings<AuthenticationSettings>(configuration, AuthenticationSettings.SectionName);
 
         services.AddAuthorization();
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -31,18 +32,5 @@ public static class AuthenticationConfiguration
     {
         app.UseAuthentication();
         return app;
-    }
-
-    private static AuthenticationSettings GetSettings(IServiceCollection services, IConfiguration configuration, string section = AuthenticationSettings.SectionName)
-    {
-        services.AddOptions<AuthenticationSettings>()
-            .BindConfiguration(section)
-            .ValidateDataAnnotations()
-            .ValidateOnStart();
-
-        var settings = configuration.GetSection(section).Get<AuthenticationSettings>()
-            ?? throw new ArgumentException($"{nameof(AuthenticationSettings)} should be configured.");
-
-        return settings;
     }
 }

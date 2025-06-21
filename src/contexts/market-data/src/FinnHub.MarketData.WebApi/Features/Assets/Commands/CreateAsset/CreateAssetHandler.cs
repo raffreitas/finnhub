@@ -1,6 +1,6 @@
 ﻿using FinnHub.MarketData.WebApi.Features.Assets.Domain.Entities;
+using FinnHub.MarketData.WebApi.Features.Assets.Domain.Enums;
 using FinnHub.MarketData.WebApi.Features.Assets.Domain.Repositories;
-using FinnHub.MarketData.WebApi.Shared.Domain.Enums;
 
 namespace FinnHub.MarketData.WebApi.Features.Assets.Commands.CreateAsset;
 

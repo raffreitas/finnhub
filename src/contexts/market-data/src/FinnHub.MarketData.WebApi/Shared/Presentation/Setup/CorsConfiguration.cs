@@ -1,4 +1,4 @@
-﻿namespace FinnHub.MarketData.WebApi.Setup;
+﻿namespace FinnHub.MarketData.WebApi.Shared.Presentation.Setup;
 
 public static class CorsConfiguration
 {

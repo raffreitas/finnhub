@@ -1,5 +1,5 @@
-﻿using FinnHub.MarketData.WebApi.Shared.Domain.Entities;
-using FinnHub.MarketData.WebApi.Shared.Domain.Enums;
+﻿using FinnHub.MarketData.WebApi.Features.Assets.Domain.Enums;
+using FinnHub.MarketData.WebApi.Shared.Domain.Entities;
 
 namespace FinnHub.MarketData.WebApi.Features.Assets.Domain.Entities;
 

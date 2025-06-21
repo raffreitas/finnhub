@@ -1,4 +1,4 @@
-﻿namespace FinnHub.MarketData.WebApi.Shared.Domain.Enums;
+﻿namespace FinnHub.MarketData.WebApi.Features.Assets.Domain.Enums;
 
 public enum AssetType
 {

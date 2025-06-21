@@ -4,7 +4,7 @@ using FinnHub.MarketData.WebApi.Shared.Presentation.Endpoints;
 
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace FinnHub.MarketData.WebApi.Setup;
+namespace FinnHub.MarketData.WebApi.Shared.Presentation.Setup;
 
 public static class EndpointsConfiguration
 {

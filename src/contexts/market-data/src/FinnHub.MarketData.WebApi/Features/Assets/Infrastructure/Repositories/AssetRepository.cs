@@ -1,8 +1,9 @@
 ﻿using FinnHub.MarketData.WebApi.Features.Assets.Domain.Entities;
+using FinnHub.MarketData.WebApi.Features.Assets.Domain.Repositories;
 
 using MongoDB.Driver;
 
-namespace FinnHub.MarketData.WebApi.Features.Assets.Domain.Repositories;
+namespace FinnHub.MarketData.WebApi.Features.Assets.Infrastructure.Repositories;
 
 internal sealed class AssetRepository(IMongoDatabase database) : IAssetRepository
 {

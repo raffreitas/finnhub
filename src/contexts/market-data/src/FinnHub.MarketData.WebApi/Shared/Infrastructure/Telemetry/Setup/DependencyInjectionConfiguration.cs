@@ -1,4 +1,5 @@
-﻿using FinnHub.MarketData.WebApi.Shared.Infrastructure.Telemetry.Correlation.Middleware;
+﻿using FinnHub.MarketData.WebApi.Shared.Extensions;
+using FinnHub.MarketData.WebApi.Shared.Infrastructure.Telemetry.Correlation.Middleware;
 using FinnHub.MarketData.WebApi.Shared.Infrastructure.Telemetry.Correlation.Setup;
 using FinnHub.MarketData.WebApi.Shared.Infrastructure.Telemetry.Middleware;
 using FinnHub.MarketData.WebApi.Shared.Infrastructure.Telemetry.Settings;
@@ -16,7 +17,10 @@ public static class DependencyInjectionConfiguration
         var services = builder.Services;
         var configuration = builder.Configuration;
 
-        var settings = GetSettings(services, configuration);
+        var settings = services.GetAndConfigureSettings<TelemetrySettings>(
+            configuration,
+            TelemetrySettings.SectionName
+        );
 
         if (settings.IsEnabled)
         {
@@ -100,22 +104,5 @@ public static class DependencyInjectionConfiguration
                 option.Protocol = OpenTelemetry.Exporter.OtlpExportProtocol.Grpc;
             });
         });
-    }
-
-    private static TelemetrySettings GetSettings(
-        IServiceCollection services,
-        ConfigurationManager configuration,
-        string section = TelemetrySettings.SectionName
-    )
-    {
-        services.AddOptions<TelemetrySettings>()
-            .BindConfiguration(section)
-            .ValidateDataAnnotations()
-            .ValidateOnStart();
-
-        var settings = configuration.GetSection(section).Get<TelemetrySettings>()
-            ?? throw new ArgumentException($"{nameof(TelemetrySettings)} should be configured.");
-
-        return settings;
     }
 }

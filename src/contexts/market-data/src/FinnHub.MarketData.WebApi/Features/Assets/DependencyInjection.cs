@@ -1,5 +1,6 @@
 ﻿using FinnHub.MarketData.WebApi.Features.Assets.Commands.CreateAsset;
 using FinnHub.MarketData.WebApi.Features.Assets.Domain.Repositories;
+using FinnHub.MarketData.WebApi.Features.Assets.Infrastructure.Repositories;
 
 namespace FinnHub.MarketData.WebApi.Features.Assets;
 
