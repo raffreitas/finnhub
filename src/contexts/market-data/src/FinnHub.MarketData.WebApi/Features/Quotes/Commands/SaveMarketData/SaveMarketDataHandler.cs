@@ -1,12 +1,13 @@
 ﻿using FinnHub.MarketData.WebApi.Features.Quotes.Commands.IngestMarketData;
 using FinnHub.MarketData.WebApi.Features.Quotes.Domain.Entities;
 using FinnHub.MarketData.WebApi.Features.Quotes.Domain.Repositories;
+using FinnHub.MarketData.WebApi.Shared;
 
 namespace FinnHub.MarketData.WebApi.Features.Quotes.Commands.SaveMarketData;
 
 internal sealed class SaveMarketDataHandler(IQuoteRepository quoteRepository)
 {
-    public async Task Handle(SaveMarketDataCommand command, CancellationToken cancellationToken)
+    public async Task<Result> Handle(SaveMarketDataCommand command, CancellationToken cancellationToken)
     {
         var quote = new HistoricalQuote(
             command.Symbol,
@@ -16,9 +17,11 @@ internal sealed class SaveMarketDataHandler(IQuoteRepository quoteRepository)
             command.LowPrice,
             command.LastPrice,
             (long)command.Volume,
-            "1d"
+            "1s"
         );
 
         await quoteRepository.AddAsync(quote, cancellationToken);
+
+        return Result.Success();
     }
 }

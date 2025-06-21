@@ -1,6 +1,4 @@
 ﻿using FinnHub.MarketData.WebApi.Features.Assets.Domain.Enums;
-using FinnHub.MarketData.WebApi.Features.Assets.Domain.Repositories;
-using FinnHub.MarketData.WebApi.Features.Assets.Infrastructure.Repositories;
 using FinnHub.MarketData.WebApi.Shared.Extensions;
 using FinnHub.MarketData.WebApi.Shared.Infrastructure.Database.Settings;
 
@@ -35,8 +33,6 @@ internal static class DependencyInjectionConfiguration
 
         BsonSerializer.RegisterSerializer(new GuidSerializer(GuidRepresentation.Standard));
         BsonSerializer.RegisterSerializer(new EnumSerializer<AssetType>(BsonType.String));
-
-        services.AddScoped<IAssetRepository, AssetRepository>();
 
         return services;
     }

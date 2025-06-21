@@ -16,7 +16,6 @@ public static class StartupHelper
 
         builder.AddTelemetryConfiguration();
 
-        services.AddCorsConfiguration();
         services.AddAuthenticationConfiguration(configuration);
         services.AddDatabaseConfiguration(configuration);
         services.AddMessagingConfiguration(configuration);
@@ -28,7 +27,6 @@ public static class StartupHelper
 
     public static void ConfigureApp(WebApplication app)
     {
-        app.UseCorsConfiguration();
         app.UseTelemetryConfiguration();
         app.UseAuthenticationConfiguration();
         app.UseHealthCheckConfiguration();

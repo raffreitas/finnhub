@@ -22,9 +22,11 @@ internal sealed class CreateAssetEndpoint : IEndpoint
                 Type = request.Type
             };
 
-            await handler.Handle(command, cancellationToken);
+            var result = await handler.Handle(command, cancellationToken);
 
-            return Results.Created();
+            return result.IsSuccess
+                ? Results.Created()
+                : Results.BadRequest(result.Errors);
         });
     }
 }

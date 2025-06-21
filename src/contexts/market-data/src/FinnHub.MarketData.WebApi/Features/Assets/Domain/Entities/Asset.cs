@@ -15,9 +15,10 @@ public class Asset : Entity
 
     public Asset(string symbol, string name, AssetType type, string exchange)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(nameof(symbol));
-        ArgumentException.ThrowIfNullOrWhiteSpace(nameof(name));
-        ArgumentException.ThrowIfNullOrWhiteSpace(nameof(exchange));
+        ArgumentException.ThrowIfNullOrWhiteSpace(symbol);
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
+        ArgumentException.ThrowIfNullOrWhiteSpace(exchange);
+
         Symbol = symbol.ToUpper();
         Name = name;
         Exchange = exchange;
