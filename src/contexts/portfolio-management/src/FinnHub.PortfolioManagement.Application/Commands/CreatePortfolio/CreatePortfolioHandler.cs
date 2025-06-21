@@ -1,10 +1,10 @@
 ﻿using FinnHub.PortfolioManagement.Application.Abstractions;
 using FinnHub.PortfolioManagement.Application.Abstractions.Users;
 using FinnHub.PortfolioManagement.Application.Errors;
-using FinnHub.PortfolioManagement.Application.Extensions.Validation;
 using FinnHub.PortfolioManagement.Domain.Aggregates;
 using FinnHub.PortfolioManagement.Domain.Aggregates.Repositories;
 using FinnHub.Shared.Core;
+using FinnHub.Shared.Core.Extensions;
 
 using MediatR;
 

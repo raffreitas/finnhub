@@ -1,4 +1,4 @@
-﻿using FinnHub.MarketData.WebApi.Shared.Domain.Entities;
+﻿using FinnHub.Shared.Kernel;
 
 namespace FinnHub.MarketData.WebApi.Features.Quotes.Domain.Entities;
 

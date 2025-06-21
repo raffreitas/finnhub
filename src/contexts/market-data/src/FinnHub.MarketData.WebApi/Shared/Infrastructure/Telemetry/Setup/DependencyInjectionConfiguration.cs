@@ -1,8 +1,8 @@
-﻿using FinnHub.MarketData.WebApi.Shared.Extensions;
-using FinnHub.MarketData.WebApi.Shared.Infrastructure.Telemetry.Correlation.Middleware;
+﻿using FinnHub.MarketData.WebApi.Shared.Infrastructure.Telemetry.Correlation.Middleware;
 using FinnHub.MarketData.WebApi.Shared.Infrastructure.Telemetry.Correlation.Setup;
 using FinnHub.MarketData.WebApi.Shared.Infrastructure.Telemetry.Middleware;
 using FinnHub.MarketData.WebApi.Shared.Infrastructure.Telemetry.Settings;
+using FinnHub.Shared.Infrastructure.Extensions;
 
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;

@@ -4,7 +4,7 @@ using FinnHub.MarketData.WebApi.Features.Quotes.Infrastructure.Binance;
 using FinnHub.MarketData.WebApi.Features.Quotes.Infrastructure.Binance.Settings;
 using FinnHub.MarketData.WebApi.Features.Quotes.Infrastructure.Repositories;
 using FinnHub.MarketData.WebApi.Features.Quotes.Infrastructure.Sync;
-using FinnHub.MarketData.WebApi.Shared.Extensions;
+using FinnHub.Shared.Infrastructure.Extensions;
 
 namespace FinnHub.MarketData.WebApi.Features.Quotes;
 

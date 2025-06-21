@@ -1,7 +1,7 @@
 ﻿using FinnHub.MarketData.WebApi.Features.Quotes.Commands.IngestMarketData;
 using FinnHub.MarketData.WebApi.Features.Quotes.Domain.Entities;
 using FinnHub.MarketData.WebApi.Features.Quotes.Domain.Repositories;
-using FinnHub.MarketData.WebApi.Shared;
+using FinnHub.Shared.Core;
 
 namespace FinnHub.MarketData.WebApi.Features.Quotes.Commands.SaveMarketData;
 

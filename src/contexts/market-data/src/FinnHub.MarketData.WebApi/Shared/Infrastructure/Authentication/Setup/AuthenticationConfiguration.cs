@@ -1,7 +1,7 @@
 ﻿using System.Text;
 
-using FinnHub.MarketData.WebApi.Shared.Extensions;
 using FinnHub.MarketData.WebApi.Shared.Infrastructure.Authentication.Settings;
+using FinnHub.Shared.Infrastructure.Extensions;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;

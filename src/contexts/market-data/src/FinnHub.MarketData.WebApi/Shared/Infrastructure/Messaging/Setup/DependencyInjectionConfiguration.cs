@@ -1,7 +1,7 @@
-﻿using FinnHub.MarketData.WebApi.Shared.Extensions;
-using FinnHub.MarketData.WebApi.Shared.Infrastructure.Messaging.Services;
+﻿using FinnHub.MarketData.WebApi.Shared.Infrastructure.Messaging.Services;
 using FinnHub.MarketData.WebApi.Shared.Infrastructure.Messaging.Services.RabbitMQ;
 using FinnHub.MarketData.WebApi.Shared.Infrastructure.Messaging.Settings;
+using FinnHub.Shared.Infrastructure.Extensions;
 
 using RabbitMQ.Client;
 

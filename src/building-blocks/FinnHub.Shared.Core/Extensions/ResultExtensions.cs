@@ -1,4 +1,5 @@
 ﻿namespace FinnHub.Shared.Core.Extensions;
+
 public static class ResultExtensions
 {
     public static TOut Match<TOut>(

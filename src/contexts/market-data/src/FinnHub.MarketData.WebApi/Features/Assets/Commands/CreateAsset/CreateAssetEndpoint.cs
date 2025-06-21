@@ -1,4 +1,5 @@
 ﻿using FinnHub.MarketData.WebApi.Shared.Presentation.Endpoints;
+using FinnHub.Shared.Core.Extensions;
 
 namespace FinnHub.MarketData.WebApi.Features.Assets.Commands.CreateAsset;
 
@@ -24,9 +25,7 @@ internal sealed class CreateAssetEndpoint : IEndpoint
 
             var result = await handler.Handle(command, cancellationToken);
 
-            return result.IsSuccess
-                ? Results.Created()
-                : Results.BadRequest(result.Errors);
+            return result.Match(Results.Created, CustomResults.Problem);
         });
     }
 }

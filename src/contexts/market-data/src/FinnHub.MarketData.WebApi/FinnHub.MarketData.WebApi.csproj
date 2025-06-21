@@ -27,4 +27,10 @@
     <PackageReference Include="Scalar.AspNetCore" Version="2.4.22" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\building-blocks\FinnHub.Shared.Core\FinnHub.Shared.Core.csproj" />
+    <ProjectReference Include="..\..\..\..\building-blocks\FinnHub.Shared.Kernel\FinnHub.Shared.Kernel.csproj" />
+    <ProjectReference Include="..\..\..\..\building-blocks\FinnHub.Shared.Infrastructure\FinnHub.Shared.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

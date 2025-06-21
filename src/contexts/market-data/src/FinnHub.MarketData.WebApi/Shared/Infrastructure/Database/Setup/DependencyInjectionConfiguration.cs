@@ -1,6 +1,6 @@
 ﻿using FinnHub.MarketData.WebApi.Features.Assets.Domain.Enums;
-using FinnHub.MarketData.WebApi.Shared.Extensions;
 using FinnHub.MarketData.WebApi.Shared.Infrastructure.Database.Settings;
+using FinnHub.Shared.Infrastructure.Extensions;
 
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;

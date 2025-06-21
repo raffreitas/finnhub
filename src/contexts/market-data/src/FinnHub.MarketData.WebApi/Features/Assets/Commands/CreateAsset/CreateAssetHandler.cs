@@ -1,8 +1,9 @@
 ﻿using FinnHub.MarketData.WebApi.Features.Assets.Domain.Entities;
 using FinnHub.MarketData.WebApi.Features.Assets.Domain.Enums;
 using FinnHub.MarketData.WebApi.Features.Assets.Domain.Repositories;
-using FinnHub.MarketData.WebApi.Shared;
-using FinnHub.MarketData.WebApi.Shared.Extensions;
+using FinnHub.MarketData.WebApi.Features.Assets.Errors;
+using FinnHub.Shared.Core;
+using FinnHub.Shared.Core.Extensions;
 
 namespace FinnHub.MarketData.WebApi.Features.Assets.Commands.CreateAsset;
 
@@ -16,22 +17,25 @@ internal sealed class CreateAssetHandler(
         var validationResult = command.Validate();
 
         if (!validationResult.IsValid)
-            return Result.Failure(validationResult.GetErrors());
+            return Result.Failure(validationResult.GetError());
 
 
         if (await assetRepository.ExistsAsync(command.Symbol, cancellationToken))
         {
             logger.LogWarning("Asset symbol {AssetSymbol} already exists", command.Symbol);
-            return Result.Failure($"Asset with symbol '{command.Symbol}' already exists.");
+            return Result.Failure(AssetErrors.AssetSymbolNotUnique(command.Symbol));
         }
 
         var assetType = Enum.Parse<AssetType>(command.Type, true);
 
-        var exchange = assetType switch
+        string? exchange = assetType switch
         {
             AssetType.Crypto => "BINANCE",
-            _ => throw new ArgumentOutOfRangeException($"Exchange for asset type '{assetType}' is not supported.")
+            _ => null
         };
+
+        if (string.IsNullOrEmpty(exchange))
+            return Result.Failure(AssetErrors.ExchangeNotSupported);
 
         var asset = new Asset(command.Symbol, command.Name, assetType, exchange);
 
