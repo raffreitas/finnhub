@@ -3,5 +3,5 @@
 public interface IMessageBus
 {
     Task PublishAsync<T>(T message, string? routingKey = null, CancellationToken cancellationToken = default);
-    Task SubscribeAsync<T>(Func<T, Task> handler, CancellationToken cancellationToken = default);
+    Task SubscribeAsync<T>(Func<T, CancellationToken, Task> handler, CancellationToken cancellationToken = default);
 }

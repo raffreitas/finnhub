@@ -15,5 +15,4 @@ public interface IQuoteRepository
 
     Task<HistoricalQuote?> GetLatestBySymbolAsync(string symbol, CancellationToken cancellationToken = default);
     Task AddAsync(HistoricalQuote quote, CancellationToken cancellationToken = default);
-    Task<bool> ExistsAsync(string symbol, DateOnly date, CancellationToken cancellationToken = default);
 }

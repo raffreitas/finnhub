@@ -125,14 +125,14 @@ internal sealed class RabbitMQMessageBus : IMessageBus, IDisposable
         );
     }
 
-    public async Task SubscribeAsync<T>(Func<T, Task> handler, CancellationToken cancellationToken = default)
+    public async Task SubscribeAsync<T>(Func<T, CancellationToken, Task> handler, CancellationToken cancellationToken = default)
     {
         await EnsureInfrastructureAsync<T>(cancellationToken);
 
         var messageType = typeof(T).Name;
         var messageConfig = _settings.GetMessageSettings(messageType);
 
-        await using var channel = await _connectionManager.CreateChannelAsync(cancellationToken);
+        var channel = await _connectionManager.CreateChannelAsync(cancellationToken);
 
         var consumer = new AsyncEventingBasicConsumer(channel);
         consumer.ReceivedAsync += async (object sender, BasicDeliverEventArgs @event) =>
@@ -144,7 +144,7 @@ internal sealed class RabbitMQMessageBus : IMessageBus, IDisposable
 
                 if (message is not null)
                 {
-                    await handler(message);
+                    await handler(message, cancellationToken);
                     await channel.BasicAckAsync(@event.DeliveryTag, false, cancellationToken);
                 }
                 else
