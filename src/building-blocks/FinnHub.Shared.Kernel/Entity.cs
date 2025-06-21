@@ -1,4 +1,4 @@
-﻿namespace FinnHub.PortfolioManagement.Domain.SeedWork;
+﻿namespace FinnHub.Shared.Kernel;
 
 public abstract class Entity
 {

@@ -1,4 +1,4 @@
-﻿namespace FinnHub.PortfolioManagement.Domain.SeedWork;
+﻿namespace FinnHub.Shared.Kernel;
 
 public abstract class AggregateRoot : Entity
 {
@@ -7,10 +7,10 @@ public abstract class AggregateRoot : Entity
     public IReadOnlyList<DomainEvent> DomainEvents
         => _domainEvents.AsReadOnly();
 
-    public void AddDomainEvent(DomainEvent eventItem)
+    protected void AddDomainEvent(DomainEvent eventItem)
         => _domainEvents.Add(eventItem);
 
-    public void RemoveDomainEvent(DomainEvent eventItem)
+    protected void RemoveDomainEvent(DomainEvent eventItem)
         => _domainEvents.Remove(eventItem);
 
     public void ClearDomainEvents()

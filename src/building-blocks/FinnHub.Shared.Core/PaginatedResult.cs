@@ -1,4 +1,5 @@
-﻿namespace FinnHub.PortfolioManagement.Domain.SeedWork;
+﻿namespace FinnHub.Shared.Core;
+
 public record PaginatedResult<T>
 {
     public int Page { get; init; }
@@ -7,7 +8,7 @@ public record PaginatedResult<T>
     public int TotalPages => (int)Math.Ceiling((double)TotalCount / PageSize);
     public bool HasPreviousPage => Page > 1;
     public bool HasNextPage => Page < TotalPages;
-    public IEnumerable<T> Items { get; init; } = [];
+    public IReadOnlyList<T> Items { get; init; } = [];
 
     public PaginatedResult(int pageNumber, int pageSize, int totalCount, IEnumerable<T> items)
     {
@@ -17,6 +18,6 @@ public record PaginatedResult<T>
         Page = pageNumber;
         PageSize = pageSize;
         TotalCount = totalCount;
-        Items = items;
+        Items = [.. items];
     }
 }
