@@ -1,4 +1,4 @@
-using FinnHub.PortfolioManagement.Domain.SeedWork;
+using FinnHub.Shared.Kernel;
 
 namespace FinnHub.PortfolioManagement.Domain.Aggregates.ValueObjects;
 

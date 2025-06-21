@@ -3,8 +3,10 @@
 using FinnHub.PortfolioManagement.Application.Abstractions.Users;
 using FinnHub.PortfolioManagement.Infrastructure.Authentication.Services;
 using FinnHub.PortfolioManagement.Infrastructure.Authentication.Settings;
+using FinnHub.Shared.Infrastructure.Extensions;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -14,7 +16,7 @@ public static class DependencyInjectionConfiguration
 {
     public static IServiceCollection AddAuthenticationConfiguration(this IServiceCollection services, IConfiguration configuration)
     {
-        var settings = GetSettings(services, configuration);
+        var settings = services.GetAndConfigureSettings<AuthenticationSettings>(configuration, AuthenticationSettings.SectionName);
 
         services.AddHttpContextAccessor();
 
@@ -25,17 +27,11 @@ public static class DependencyInjectionConfiguration
         return services;
     }
 
-    private static AuthenticationSettings GetSettings(IServiceCollection services, IConfiguration configuration, string section = AuthenticationSettings.SectionName)
+    public static WebApplication UseAuthenticationConfiguration(this WebApplication app)
     {
-        services.AddOptions<AuthenticationSettings>()
-            .BindConfiguration(section)
-            .ValidateDataAnnotations()
-            .ValidateOnStart();
-
-        var settings = configuration.GetSection(section).Get<AuthenticationSettings>()
-            ?? throw new ArgumentException($"{nameof(AuthenticationSettings)} should be configured.");
-
-        return settings;
+        app.UseAuthentication();
+        app.UseAuthorization();
+        return app;
     }
 
     private static IServiceCollection AddJwtAuthentication(this IServiceCollection services, AuthenticationSettings settings)

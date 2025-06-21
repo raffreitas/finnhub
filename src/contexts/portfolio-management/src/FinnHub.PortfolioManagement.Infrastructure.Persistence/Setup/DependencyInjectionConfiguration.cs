@@ -1,11 +1,10 @@
-﻿using System.Reflection;
-
-using FinnHub.PortfolioManagement.Application.Abstractions;
+﻿using FinnHub.PortfolioManagement.Application.Abstractions;
 using FinnHub.PortfolioManagement.Domain.Aggregates.Repositories;
 using FinnHub.PortfolioManagement.Infrastructure.Persistence.Context;
 using FinnHub.PortfolioManagement.Infrastructure.Persistence.Repositories;
 using FinnHub.PortfolioManagement.Infrastructure.Persistence.Settings;
 using FinnHub.PortfolioManagement.Infrastructure.Persistence.Shared;
+using FinnHub.Shared.Infrastructure.Extensions;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -16,7 +15,7 @@ public static class DependencyInjectionConfiguration
 {
     public static IServiceCollection AddPersistenceConfiguration(this IServiceCollection services, IConfiguration configuration)
     {
-        var settings = GetSettings(services, configuration);
+        var settings = services.GetAndConfigureSettings<DatabaseSettings>(configuration, DatabaseSettings.SectionName);
 
         services.AddDbContext<ApplicationDbContext>(options =>
             options.UseNpgsql(settings.ConnectionString, sqlOptions =>
@@ -39,18 +38,5 @@ public static class DependencyInjectionConfiguration
             .AddHealthChecks()
             .AddNpgSql(settings.ConnectionString);
         return services;
-    }
-
-    private static DatabaseSettings GetSettings(IServiceCollection services, IConfiguration configuration, string section = DatabaseSettings.SectionName)
-    {
-        services.AddOptions<DatabaseSettings>()
-            .BindConfiguration(section)
-            .ValidateDataAnnotations()
-            .ValidateOnStart();
-
-        var settings = configuration.GetSection(section).Get<DatabaseSettings>()
-            ?? throw new ArgumentException($"{nameof(DatabaseSettings)} should be configured.");
-
-        return settings;
     }
 }

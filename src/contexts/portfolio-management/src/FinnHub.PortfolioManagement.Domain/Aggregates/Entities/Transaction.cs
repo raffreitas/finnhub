@@ -1,6 +1,6 @@
 using FinnHub.PortfolioManagement.Domain.Aggregates.Enums;
 using FinnHub.PortfolioManagement.Domain.Aggregates.ValueObjects;
-using FinnHub.PortfolioManagement.Domain.SeedWork;
+using FinnHub.Shared.Kernel;
 
 namespace FinnHub.PortfolioManagement.Domain.Aggregates.Entities;
 

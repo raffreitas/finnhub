@@ -22,6 +22,7 @@
     <ProjectReference Include="..\FinnHub.PortfolioManagement.Infrastructure.Authentication\FinnHub.PortfolioManagement.Infrastructure.Authentication.csproj" />
     <ProjectReference Include="..\FinnHub.PortfolioManagement.Infrastructure.Persistence\FinnHub.PortfolioManagement.Infrastructure.Persistence.csproj" />
     <ProjectReference Include="..\FinnHub.PortfolioManagement.Infrastructure.Telemetry\FinnHub.PortfolioManagement.Infrastructure.Telemetry.csproj" />
+    <ProjectReference Include="..\..\..\..\building-blocks\FinnHub.Shared.Core\FinnHub.Shared.Core.csproj" />
   </ItemGroup>
 
 </Project>

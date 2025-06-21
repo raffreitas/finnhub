@@ -10,32 +10,23 @@ public static class StartupHelper
 {
     public static void ConfigureServices(WebApplicationBuilder builder)
     {
+        var services = builder.Services;
+        var configuration = builder.Configuration;
+
         builder.AddTelemetryConfiguration();
-
-        builder.Services.AddControllers();
-
-        builder.Services.AddCorsConfiguration();
-
-        builder.Services.AddOpenApiConfiguration();
-        builder.Services.AddPersistenceConfiguration(builder.Configuration);
-        builder.Services.AddAuthenticationConfiguration(builder.Configuration);
-        builder.Services.AddApplicationConfiguration();
+        services.AddPresentationConfiguration();
+        services.AddOpenApiConfiguration();
+        services.AddPersistenceConfiguration(configuration);
+        services.AddAuthenticationConfiguration(configuration);
+        services.AddApplicationConfiguration();
     }
 
     public static void ConfigureApp(WebApplication app)
     {
         app.UseTelemetryConfiguration();
-
         app.UseOpenApiConfiguration();
-
-        app.UseCorsConfiguration();
-
         app.UseHttpsRedirection();
-
-        app.UseAuthentication();
-
-        app.UseAuthorization();
-
-        app.MapControllers();
+        app.UseAuthenticationConfiguration();
+        app.UsePresentationConfiguration();
     }
 }

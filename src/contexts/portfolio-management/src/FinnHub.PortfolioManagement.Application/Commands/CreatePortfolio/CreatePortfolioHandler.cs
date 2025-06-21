@@ -1,48 +1,38 @@
 ﻿using FinnHub.PortfolioManagement.Application.Abstractions;
 using FinnHub.PortfolioManagement.Application.Abstractions.Users;
+using FinnHub.PortfolioManagement.Application.Errors;
 using FinnHub.PortfolioManagement.Application.Extensions.Validation;
-using FinnHub.PortfolioManagement.Application.Shared.Result;
 using FinnHub.PortfolioManagement.Domain.Aggregates;
 using FinnHub.PortfolioManagement.Domain.Aggregates.Repositories;
+using FinnHub.Shared.Core;
 
 using MediatR;
 
 namespace FinnHub.PortfolioManagement.Application.Commands.CreatePortfolio;
 
-internal sealed class CreatePortfolioHandler : IRequestHandler<CreatePortfolioRequest, Result<CreatePortfolioResponse>>
+internal sealed class CreatePortfolioHandler(
+    IPortfolioRepository portfolioRepository,
+    IUnitOfWork unitOfWork,
+    IUserContext userContext
+) : IRequestHandler<CreatePortfolioRequest, Result<CreatePortfolioResponse>>
 {
-    private readonly IPortfolioRepository _portfolioRepository;
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly IUserContext _userContext;
-
-    public CreatePortfolioHandler(
-        IPortfolioRepository portfolioRepository,
-        IUnitOfWork unitOfWork,
-        IUserContext userContext
-    )
-    {
-        _portfolioRepository = portfolioRepository;
-        _unitOfWork = unitOfWork;
-        _userContext = userContext;
-    }
-
     public async Task<Result<CreatePortfolioResponse>> Handle(CreatePortfolioRequest request, CancellationToken cancellationToken)
     {
         var validationResult = request.Validate();
         if (!validationResult.IsValid)
-            return Result<CreatePortfolioResponse>.Failure(validationResult.GetErrors());
+            return Result<CreatePortfolioResponse>.ValidationFailure(validationResult.GetError());
 
-        var currentUserId = _userContext.UserId;
+        var currentUserId = userContext.UserId;
 
-        var nameIsTaken = await _portfolioRepository.NameExistsAsync(currentUserId, request.Name, cancellationToken);
+        var nameIsTaken = await portfolioRepository.NameExistsAsync(currentUserId, request.Name, cancellationToken);
         if (nameIsTaken)
-            return Result<CreatePortfolioResponse>.Failure("A portfolio with this name already exists.");
+            return Result.Failure<CreatePortfolioResponse>(PortfolioErrors.PortfolioNameNotUnique);
 
         var portfolio = Portfolio.Create(currentUserId, request.Name, request.Description);
 
-        await _portfolioRepository.AddAsync(portfolio, cancellationToken);
+        await portfolioRepository.AddAsync(portfolio, cancellationToken);
 
-        await _unitOfWork.CommitAsync(cancellationToken);
+        await unitOfWork.CommitAsync(cancellationToken);
 
         return Result.Success(new CreatePortfolioResponse(portfolio.Id));
     }

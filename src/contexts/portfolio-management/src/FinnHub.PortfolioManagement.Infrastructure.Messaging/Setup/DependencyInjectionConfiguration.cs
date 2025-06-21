@@ -1,4 +1,5 @@
 ﻿using FinnHub.PortfolioManagement.Infrastructure.Messaging.Settings;
+using FinnHub.Shared.Infrastructure.Extensions;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,24 +9,7 @@ public static class DependencyInjectionConfiguration
 {
     public static IServiceCollection AddMessagingConfiguration(this IServiceCollection services, IConfiguration configuration)
     {
-        var settings = GetSettings(services, configuration);
+        var settings = services.GetAndConfigureSettings<MessagingSettings>(configuration, MessagingSettings.SectionName);
         return services;
-    }
-
-    private static MessagingSettings GetSettings(
-        IServiceCollection services,
-        IConfiguration configuration,
-        string section = MessagingSettings.SectionName)
-    {
-        services.AddOptions<MessagingSettings>()
-            .BindConfiguration(section)
-            .ValidateDataAnnotations()
-            .ValidateOnStart();
-
-        var settings = configuration.GetSection(section).Get<MessagingSettings>()
-            ?? throw new ArgumentException($"{nameof(MessagingSettings)} should be configured.");
-
-        return settings;
-
     }
 }

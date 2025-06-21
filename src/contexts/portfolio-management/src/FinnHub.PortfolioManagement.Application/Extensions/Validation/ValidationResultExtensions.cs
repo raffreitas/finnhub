@@ -1,8 +1,10 @@
-﻿using FluentValidation.Results;
+﻿using FinnHub.Shared.Core;
+
+using FluentValidation.Results;
 
 namespace FinnHub.PortfolioManagement.Application.Extensions.Validation;
 internal static class ValidationResultExtensions
 {
-    public static string[] GetErrors(this ValidationResult result)
-        => [.. result.Errors.Select(e => e.ErrorMessage)];
+    public static ValidationError GetError(this ValidationResult result)
+        => new([.. result.Errors.Select(e => Error.Problem(e.ErrorCode, e.ErrorMessage))]);
 }

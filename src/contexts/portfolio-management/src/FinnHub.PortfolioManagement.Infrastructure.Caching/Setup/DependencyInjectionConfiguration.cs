@@ -1,4 +1,5 @@
 ﻿using FinnHub.PortfolioManagement.Infrastructure.Caching.Settings;
+using FinnHub.Shared.Infrastructure.Extensions;
 
 using Microsoft.Extensions.Caching.Hybrid;
 using Microsoft.Extensions.Configuration;
@@ -10,7 +11,7 @@ public static class DependencyInjectionConfiguration
 {
     public static IServiceCollection AddCachingConfiguration(this IServiceCollection services, IConfiguration configuration)
     {
-        var settings = GetSettings(services, configuration);
+        var settings = services.GetAndConfigureSettings<CacheSettings>(configuration, CacheSettings.SectionName);
 
         services.AddHybridCache(options =>
         {
@@ -26,19 +27,5 @@ public static class DependencyInjectionConfiguration
             options.InstanceName = settings.CacheName;
         });
         return services;
-    }
-
-    private static CacheSettings GetSettings(IServiceCollection services, IConfiguration configuration, string section = CacheSettings.SectionName)
-    {
-        services.AddOptions<CacheSettings>()
-            .BindConfiguration(section)
-            .ValidateDataAnnotations()
-            .ValidateOnStart();
-
-        var cacheSettings = configuration.GetSection(section).Get<CacheSettings>()
-            ?? throw new ArgumentException($"{nameof(CacheSettings)} should be configured.");
-
-        return cacheSettings;
-
     }
 }

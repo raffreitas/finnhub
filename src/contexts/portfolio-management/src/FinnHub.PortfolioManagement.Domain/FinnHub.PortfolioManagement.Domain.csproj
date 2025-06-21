@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\building-blocks\FinnHub.Shared.Kernel\FinnHub.Shared.Kernel.csproj" />
+  </ItemGroup>
+
 </Project>

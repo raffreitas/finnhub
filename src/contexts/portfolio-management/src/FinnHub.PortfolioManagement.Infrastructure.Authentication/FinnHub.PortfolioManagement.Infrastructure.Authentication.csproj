@@ -12,7 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FinnHub.PortfolioManagement.Application\FinnHub.PortfolioManagement.Application.csproj" />
+      <ProjectReference Include="..\FinnHub.PortfolioManagement.Application\FinnHub.PortfolioManagement.Application.csproj" />
+      <ProjectReference Include="..\..\..\..\building-blocks\FinnHub.Shared.Infrastructure\FinnHub.Shared.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

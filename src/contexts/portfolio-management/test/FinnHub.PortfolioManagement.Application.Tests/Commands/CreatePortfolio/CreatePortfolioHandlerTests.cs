@@ -1,9 +1,11 @@
 ﻿using FinnHub.PortfolioManagement.Application.Abstractions;
 using FinnHub.PortfolioManagement.Application.Abstractions.Users;
 using FinnHub.PortfolioManagement.Application.Commands.CreatePortfolio;
+using FinnHub.PortfolioManagement.Application.Errors;
 using FinnHub.PortfolioManagement.Application.Tests.Commands.Common;
 using FinnHub.PortfolioManagement.Domain.Aggregates;
 using FinnHub.PortfolioManagement.Domain.Aggregates.Repositories;
+using FinnHub.Shared.Core;
 
 using NSubstitute;
 
@@ -39,8 +41,13 @@ public class CreatePortfolioHandlerTests(CommandsBaseFixture fixture) : IClassFi
 
         // Assert
         result.IsFailure.ShouldBeTrue();
-        result.Errors.ShouldContain("'Name' must not be empty.");
-        result.Errors.ShouldContain("The length of 'Name' must be at least 3 characters. You entered 0 characters.");
+        result.Error.ShouldBeOfType<ValidationError>()
+            .Errors
+            .Select(e => e.Description)
+            .ShouldBe([
+                "'Name' must not be empty.",
+                "The length of 'Name' must be at least 3 characters. You entered 0 characters."
+            ], ignoreOrder: true);
     }
 
     [Fact]
@@ -65,7 +72,7 @@ public class CreatePortfolioHandlerTests(CommandsBaseFixture fixture) : IClassFi
 
         // Assert
         result.IsFailure.ShouldBeTrue();
-        result.Errors.ShouldContain("A portfolio with this name already exists.");
+        result.Error.ShouldBe(PortfolioErrors.PortfolioNameNotUnique);
     }
 
     [Fact(DisplayName = nameof(Handle_ShouldReturnWithSuccess_WhenAllRulesMatches))]
@@ -90,7 +97,7 @@ public class CreatePortfolioHandlerTests(CommandsBaseFixture fixture) : IClassFi
 
         // Assert  
         result.IsSuccess.ShouldBeTrue();
-        result.Errors.ShouldBeEmpty();
+        result.Error.ShouldBe(Error.None);
         result.Value.ShouldNotBeNull();
         result.Value.Id.ShouldNotBe(Guid.Empty);
 

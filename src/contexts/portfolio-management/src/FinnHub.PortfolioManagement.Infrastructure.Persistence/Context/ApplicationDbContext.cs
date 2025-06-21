@@ -1,7 +1,7 @@
 ﻿using FinnHub.PortfolioManagement.Domain.Aggregates;
 using FinnHub.PortfolioManagement.Domain.Aggregates.Entities;
-using FinnHub.PortfolioManagement.Domain.SeedWork;
 using FinnHub.PortfolioManagement.Infrastructure.Persistence.Configurations;
+using FinnHub.Shared.Kernel;
 
 using Microsoft.EntityFrameworkCore;
 

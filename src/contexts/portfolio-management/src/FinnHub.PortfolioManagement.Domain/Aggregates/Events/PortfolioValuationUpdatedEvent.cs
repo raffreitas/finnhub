@@ -1,4 +1,4 @@
-using FinnHub.PortfolioManagement.Domain.SeedWork;
+using FinnHub.Shared.Kernel;
 
 namespace FinnHub.PortfolioManagement.Domain.Aggregates.Events;
 
@@ -10,11 +10,14 @@ public record PortfolioValuationUpdatedEvent : DomainEvent
     public decimal ProfitLossPercentage { get; init; }
     public DateTimeOffset ValuationTime { get; init; }
 
+    protected override string EventVersion => "1.0.0";
+
     public PortfolioValuationUpdatedEvent(
         Guid portfolioId,
         decimal totalValue,
         decimal profitLoss,
-        decimal profitLossPercentage)
+        decimal profitLossPercentage
+    ) : base(portfolioId)
     {
         PortfolioId = portfolioId;
         TotalValue = totalValue;

@@ -1,4 +1,4 @@
-﻿using FinnHub.PortfolioManagement.Domain.SeedWork;
+﻿using FinnHub.Shared.Kernel;
 
 namespace FinnHub.PortfolioManagement.Domain.Aggregates.Events;
 
@@ -9,8 +9,9 @@ public record AssetBoughtEvent : DomainEvent
     public string AssetSymbol { get; init; }
     public int Quantity { get; init; }
     public decimal Price { get; init; }
-    
-    public AssetBoughtEvent(Guid transactionId, Guid portfolioId, string assetSymbol, int quantity, decimal price)
+    protected override string EventVersion => "1.0.0";
+    public AssetBoughtEvent(Guid transactionId, Guid portfolioId, string assetSymbol, int quantity, decimal price) 
+        : base(portfolioId)
     {
         TransactionId = transactionId;
         PortfolioId = portfolioId;

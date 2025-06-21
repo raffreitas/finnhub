@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FinnHub.PortfolioManagement.Domain\FinnHub.PortfolioManagement.Domain.csproj" />
+    <ProjectReference Include="..\..\..\..\building-blocks\FinnHub.Shared.Core\FinnHub.Shared.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

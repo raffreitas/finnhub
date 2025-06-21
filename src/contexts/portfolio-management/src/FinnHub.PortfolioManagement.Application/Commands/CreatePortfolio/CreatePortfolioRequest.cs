@@ -1,4 +1,4 @@
-﻿using FinnHub.PortfolioManagement.Application.Shared.Result;
+﻿using FinnHub.Shared.Core;
 
 using FluentValidation;
 using FluentValidation.Results;
