@@ -5,12 +5,10 @@ on:
     branches: [main]
     paths:
       - 'src/contexts/market-data/**'
-      - '.github/workflows/market-data.yaml'
   pull_request:
     branches: [main]
     paths:
       - 'src/contexts/market-data/**'
-      - '.github/workflows/market-data.yaml'
 
 jobs:
   build:
