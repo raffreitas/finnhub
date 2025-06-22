@@ -3,6 +3,7 @@ updates:
   - package-ecosystem: "nuget"
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "daily"
     commit-message:
-      prefix: "fix(deps): "
+      prefix: "chore(deps): "
+    open-pull-requests-limit: 1
