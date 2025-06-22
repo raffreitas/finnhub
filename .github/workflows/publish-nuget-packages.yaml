@@ -1,0 +1,42 @@
+name: Publish Nuget Packages
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'src/building-blocks/**'
+      - '.github/workflows/publish-nuget-packages.yaml'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 9.x.x
+
+      - name: Restore dependencies
+        run: |
+          cd src/building-blocks
+          dotnet restore
+
+      - name: Build projects
+        run: |
+          cd src/building-blocks
+          dotnet build --configuration Release --no-restore
+
+      - name: Pack Shared Core
+        run: dotnet pack src/building-blocks/FinnHub.Shared.Core/FinnHub.Shared.Core.csproj --configuration Release --output ./nupkgs
+
+      - name: Pack Shared Infrastructure
+        run: dotnet pack src/building-blocks/FinnHub.Shared.Infrastructure/FinnHub.Shared.Infrastructure.csproj --configuration Release --output ./nupkgs
+
+      - name: Pack Shared Kernel
+        run: dotnet pack src/building-blocks/FinnHub.Shared.Kernel/FinnHub.Shared.Kernel.csproj --configuration Release --output ./nupkgs
+
+      - name: Push packages to NuGet.org
+        run: dotnet nuget push "./nupkgs/*.nupkg" -k ${{ secrets.NUGET_API_KEY }} --s https://api.nuget.org/v3/index.json --skip-duplicate
