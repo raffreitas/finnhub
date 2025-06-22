@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics;
 
-using FinnHub.MarketData.WebApi.Features.Quotes.Commands.IngestMarketData;
 using FinnHub.MarketData.WebApi.Features.Quotes.Commands.SaveMarketData;
 using FinnHub.MarketData.WebApi.Features.Quotes.Domain.Events;
 using FinnHub.MarketData.WebApi.Shared.Infrastructure.Messaging.Services;
