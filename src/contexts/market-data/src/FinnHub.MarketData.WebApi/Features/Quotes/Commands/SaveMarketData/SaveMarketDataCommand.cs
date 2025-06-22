@@ -1,4 +1,4 @@
-﻿namespace FinnHub.MarketData.WebApi.Features.Quotes.Commands.IngestMarketData;
+﻿namespace FinnHub.MarketData.WebApi.Features.Quotes.Commands.SaveMarketData;
 
 public sealed record SaveMarketDataCommand(
     string Symbol,

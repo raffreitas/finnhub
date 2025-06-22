@@ -1,5 +1,4 @@
-﻿using FinnHub.MarketData.WebApi.Features.Quotes.Commands.IngestMarketData;
-using FinnHub.MarketData.WebApi.Features.Quotes.Domain.Entities;
+﻿using FinnHub.MarketData.WebApi.Features.Quotes.Domain.Entities;
 using FinnHub.MarketData.WebApi.Features.Quotes.Domain.Repositories;
 using FinnHub.Shared.Core;
 
@@ -16,7 +15,7 @@ internal sealed class SaveMarketDataHandler(IQuoteRepository quoteRepository)
             command.HighPrice,
             command.LowPrice,
             command.LastPrice,
-            (long)command.Volume,
+            command.Volume,
             "1s"
         );
 

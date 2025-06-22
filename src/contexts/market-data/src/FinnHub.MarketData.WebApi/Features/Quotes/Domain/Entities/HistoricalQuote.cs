@@ -10,7 +10,7 @@ public sealed class HistoricalQuote : Entity
     public decimal High { get; private set; }
     public decimal Low { get; private set; }
     public decimal Close { get; private set; }
-    public long Volume { get; private set; }
+    public decimal Volume { get; private set; }
     public string Interval { get; private set; }
     public DateTime CreatedAt { get; private set; } = DateTime.UtcNow;
 
@@ -21,7 +21,7 @@ public sealed class HistoricalQuote : Entity
         decimal high,
         decimal low,
         decimal close,
-        long volume,
+        decimal volume,
         string interval
     )
     {

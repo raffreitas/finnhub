@@ -1,7 +1,9 @@
 ﻿using FinnHub.MarketData.WebApi.Features.Assets.Domain.Entities;
 using FinnHub.MarketData.WebApi.Features.Assets.Domain.Enums;
+using FinnHub.MarketData.WebApi.Features.Assets.Domain.Events;
 using FinnHub.MarketData.WebApi.Features.Assets.Domain.Repositories;
 using FinnHub.MarketData.WebApi.Features.Assets.Errors;
+using FinnHub.MarketData.WebApi.Shared.Infrastructure.Messaging.Services;
 using FinnHub.Shared.Core;
 using FinnHub.Shared.Core.Extensions;
 
@@ -9,6 +11,7 @@ namespace FinnHub.MarketData.WebApi.Features.Assets.Commands.CreateAsset;
 
 internal sealed class CreateAssetHandler(
     IAssetRepository assetRepository,
+    IMessageBus messageBus,
     ILogger<CreateAssetHandler> logger
 )
 {
@@ -40,6 +43,15 @@ internal sealed class CreateAssetHandler(
         var asset = new Asset(command.Symbol, command.Name, assetType, exchange);
 
         await assetRepository.AddAsync(asset, cancellationToken);
+
+        await messageBus.PublishAsync(new AssetWatchlistChangedEvent(
+            Guid.NewGuid(),
+            exchange,
+            AssetChangedType.Added.ToString(),
+            asset.Symbol,
+            assetType.ToString(),
+            DateTimeOffset.UtcNow
+        ), cancellationToken: cancellationToken);
 
         return Result.Success();
     }

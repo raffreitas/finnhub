@@ -14,7 +14,7 @@ internal sealed class CreateAssetEndpoint : IEndpoint
 
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapPost("/assets", async (Request request, CreateAssetHandler handler, CancellationToken cancellationToken) =>
+        app.MapPost("/api/v1/assets", async (Request request, CreateAssetHandler handler, CancellationToken cancellationToken) =>
         {
             var command = new CreateAssetCommand
             {
@@ -26,6 +26,9 @@ internal sealed class CreateAssetEndpoint : IEndpoint
             var result = await handler.Handle(command, cancellationToken);
 
             return result.Match(Results.Created, CustomResults.Problem);
-        });
+        })
+            .RequireAuthorization()
+            .ProducesProblem(StatusCodes.Status422UnprocessableEntity)
+            .ProducesProblem(StatusCodes.Status400BadRequest);
     }
 }
