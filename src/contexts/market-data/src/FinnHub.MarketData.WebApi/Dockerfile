@@ -8,9 +8,6 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0-alpine AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
-COPY ["../../../building-blocks/FinnHub.Shared.Core/FinnHub.Shared.Core.csproj", "FinnHub.Shared.Core/"]
-COPY ["../../../building-blocks/FinnHub.Shared.Kernel/FinnHub.Shared.Kernel.csproj", "FinnHub.Shared.Kernel/"]
-COPY ["../../../building-blocks/FinnHub.Shared.Infrastructure/FinnHub.Shared.Infrastructure.csproj", "FinnHub.Shared.Infrastructure/"]
 COPY ["src/FinnHub.MarketData.WebApi/FinnHub.MarketData.WebApi.csproj", "FinnHub.MarketData.WebApi/"]
 
 RUN dotnet restore "FinnHub.MarketData.WebApi/FinnHub.MarketData.WebApi.csproj"

@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\building-blocks\FinnHub.Shared.Kernel\FinnHub.Shared.Kernel.csproj" />
+    <PackageReference Include="FinnHub.Shared.Kernel" Version="1.0.0" />
   </ItemGroup>
 
 </Project>

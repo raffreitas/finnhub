@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FinnHub.Shared.Infrastructure" Version="1.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.6" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.6" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="9.0.6" />
@@ -17,7 +18,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FinnHub.PortfolioManagement.Domain\FinnHub.PortfolioManagement.Domain.csproj" />
-    <ProjectReference Include="..\..\..\..\building-blocks\FinnHub.Shared.Infrastructure\FinnHub.Shared.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

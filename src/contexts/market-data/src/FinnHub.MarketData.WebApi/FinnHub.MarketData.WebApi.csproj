@@ -10,6 +10,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FinnHub.Shared.Core" Version="1.0.0" />
+    <PackageReference Include="FinnHub.Shared.Infrastructure" Version="1.0.0" />
+    <PackageReference Include="FinnHub.Shared.Kernel" Version="1.0.0" />
     <PackageReference Include="FluentValidation" Version="12.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.6" />
@@ -24,13 +27,7 @@
     <PackageReference Include="OpenTelemetry.Instrumentation.Http" Version="1.12.0" />
     <PackageReference Include="OpenTelemetry.Instrumentation.Runtime" Version="1.12.0" />
     <PackageReference Include="RabbitMQ.Client" Version="7.1.2" />
-    <PackageReference Include="Scalar.AspNetCore" Version="2.4.22" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\building-blocks\FinnHub.Shared.Core\FinnHub.Shared.Core.csproj" />
-    <ProjectReference Include="..\..\..\..\building-blocks\FinnHub.Shared.Kernel\FinnHub.Shared.Kernel.csproj" />
-    <ProjectReference Include="..\..\..\..\building-blocks\FinnHub.Shared.Infrastructure\FinnHub.Shared.Infrastructure.csproj" />
+    <PackageReference Include="Scalar.AspNetCore" Version="2.5.0" />
   </ItemGroup>
 
 </Project>

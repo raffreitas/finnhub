@@ -7,14 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FinnHub.Shared.Infrastructure" Version="1.0.0" />
     <PackageReference Include="Microsoft.Extensions.Caching.Hybrid" Version="9.6.0" />
     <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="9.0.6" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="9.0.6" />
     <PackageReference Include="Microsoft.Extensions.Options.DataAnnotations" Version="9.0.6" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\building-blocks\FinnHub.Shared.Infrastructure\FinnHub.Shared.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
