@@ -38,4 +38,4 @@ jobs:
         run: dotnet pack src/building-blocks/FinnHub.Shared.Kernel/FinnHub.Shared.Kernel.csproj --configuration Release --output ./nupkgs
 
       - name: Push packages to NuGet.org
-        run: dotnet nuget push "./nupkgs/*.nupkg" -k ${{ secrets.NUGET_API_KEY }} --s https://api.nuget.org/v3/index.json --skip-duplicate
+        run: dotnet nuget push "./nupkgs/*.nupkg" -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json --skip-duplicate
