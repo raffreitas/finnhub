@@ -9,11 +9,7 @@ namespace FinnHub.PortfolioManagement.WebApi.Tests.Common.Authentication;
 internal sealed class JwtTokenBuilder
 {
     private const string TEST_JWT_SECRET_KEY = "22ef12f3-a580-4393-9b44-8f1a776578ab-22ef12f3-a580-4393-9b44-8f1a776578ab";
-    public static Guid UserId { get; private set; } = Guid.NewGuid();
-    public static string Build()
-    {
-        return GenerateJwtToken();
-    }
+    private Guid UserId { get; set; } = Guid.NewGuid();
 
     public JwtTokenBuilder WithUserId(Guid userId)
     {
@@ -21,7 +17,7 @@ internal sealed class JwtTokenBuilder
         return this;
     }
 
-    private static string GenerateJwtToken()
+    public string Build()
     {
         var securityKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(TEST_JWT_SECRET_KEY));
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);

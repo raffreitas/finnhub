@@ -17,10 +17,11 @@ public class PortfolioTests(PortifolioTestsFixture fixture) : IClassFixture<Port
         var assetSymbol = AssetSymbol.Create(fixture.Faker.Commerce.ProductName()[..10]);
         var quantity = Quantity.Create(fixture.Faker.Random.Int(1, 100));
         var price = Money.Create(fixture.Faker.Random.Decimal(1.0m, 1000.0m));
+        var currentMarketValue = Money.Create(fixture.Faker.Random.Decimal(1.0m, 1000.0m));
         var transactionDate = DateTimeOffset.UtcNow;
         // Act
 
-        var transaction = Transaction.CreateBuyTransaction(portfolioId, assetSymbol, quantity, price, transactionDate);
+        var transaction = Transaction.CreateBuyTransaction(portfolioId, assetSymbol, quantity, price, currentMarketValue, transactionDate);
 
         // Assert
         portfolioId.ShouldBe(transaction.PortfolioId);

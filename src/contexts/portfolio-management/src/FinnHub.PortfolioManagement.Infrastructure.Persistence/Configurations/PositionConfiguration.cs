@@ -31,7 +31,7 @@ internal sealed class PositionConfiguration : IEntityTypeConfiguration<Position>
             .IsRequired()
             .HasMaxLength(10);
 
-        builder.OwnsOne(p => p.AverageCost, averageCost =>
+        builder.ComplexProperty(p => p.AverageCost, averageCost =>
         {
             averageCost.Property(m => m.Value)
                 .HasPrecision(18, 2)
@@ -43,17 +43,17 @@ internal sealed class PositionConfiguration : IEntityTypeConfiguration<Position>
                 .IsRequired();
         });
 
-        builder.OwnsOne(p => p.CurrentMarketPrice, c =>
+        builder.ComplexProperty(p => p.CurrentMarketPrice, c =>
         {
             c.Property(m => m.Value)
-                .HasPrecision(18, 2);
+                .HasPrecision(18, 2)
+                .IsRequired();
 
             c.Property(m => m.Currency)
                 .HasConversion<string>()
-                .HasMaxLength(3);
+                .HasMaxLength(3)
+                .IsRequired();
         });
-
-        builder.Navigation(t => t.CurrentMarketPrice).IsRequired(false);
 
         builder.Property(x => x.LastUpdated)
             .IsRequired();

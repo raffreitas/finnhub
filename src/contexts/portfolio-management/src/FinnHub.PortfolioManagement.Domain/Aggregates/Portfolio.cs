@@ -6,16 +6,9 @@ using FinnHub.Shared.Kernel;
 
 namespace FinnHub.PortfolioManagement.Domain.Aggregates;
 
-/// <summary>
-/// Portfolio is the aggregate root for the portfolio management domain.
-/// It encapsulates all operations related to positions and transactions.
-/// </summary>
 public sealed class Portfolio : AggregateRoot
 {
-    // Collection of positions in this portfolio
     private readonly List<Position> _positions = [];
-
-    // Collection of all transactions for this portfolio
     private readonly List<Transaction> _transactions = [];
 
     public string Name { get; private set; }
@@ -48,7 +41,83 @@ public sealed class Portfolio : AggregateRoot
         return portfolio;
     }
 
-    // Process an existing transaction object
+
+    #region BuyAsset Methods
+    public Transaction BuyAsset(
+       AssetSymbol assetSymbol,
+       Quantity quantity,
+       Money price,
+       Money currentMarketValue,
+       DateTimeOffset? transactionDate = null)
+    {
+        var transaction = Transaction.CreateBuyTransaction(
+            Id,
+            assetSymbol,
+            quantity,
+            price,
+            currentMarketValue,
+            transactionDate);
+
+        ProcessTransaction(transaction);
+
+        return transaction;
+    }
+
+    public Transaction BuyAsset(
+        string assetSymbol,
+        int quantity,
+        decimal price,
+        decimal currentMarketValue,
+        DateTimeOffset? transactionDate = null)
+    {
+        return BuyAsset(
+            AssetSymbol.Create(assetSymbol),
+            Quantity.Create(quantity),
+            Money.Create(price),
+            Money.Create(currentMarketValue),
+            transactionDate
+        );
+    }
+    #endregion
+
+
+    #region SellAsset Methods
+    public Transaction SellAsset(
+        AssetSymbol assetSymbol,
+        Quantity quantity,
+        Money price,
+        DateTimeOffset? transactionDate = null)
+    {
+        var existingPosition = FindPositionBySymbol(assetSymbol.Value);
+        if (existingPosition == null || existingPosition.Quantity.Value < quantity.Value)
+            throw new InvalidOperationException($"Cannot sell {quantity.Value} of {assetSymbol.Value}: insufficient position");
+
+        var transaction = Transaction.CreateSellTransaction(
+            Id,
+            assetSymbol,
+            quantity,
+            price,
+            transactionDate);
+
+        ProcessTransaction(transaction);
+
+        return transaction;
+    }
+
+    public Transaction SellAsset(
+        string assetSymbol,
+        int quantity,
+        decimal price,
+        DateTimeOffset? transactionDate = null)
+    {
+        return SellAsset(
+            AssetSymbol.Create(assetSymbol),
+            Quantity.Create(quantity),
+            Money.Create(price),
+            transactionDate);
+    }
+    #endregion
+
     private void ProcessTransaction(Transaction transaction)
     {
         if (transaction.PortfolioId != Id)
@@ -108,84 +177,11 @@ public sealed class Portfolio : AggregateRoot
         AddDomainEvent(new PortfolioPositionUpdatedEvent(Id, transaction.AssetSymbol.Value));
     }
 
-    // Buy an asset
-    public Transaction BuyAsset(
-        AssetSymbol assetSymbol,
-        Quantity quantity,
-        Money price,
-        DateTimeOffset? transactionDate = null)
-    {
-        var transaction = Transaction.CreateBuyTransaction(
-            Id,
-            assetSymbol,
-            quantity,
-            price,
-            transactionDate);
-
-        ProcessTransaction(transaction);
-
-        return transaction;
-    }
-
-    // Buy an asset (convenience overload)
-    public Transaction BuyAsset(
-        string assetSymbol,
-        int quantity,
-        decimal price,
-        DateTimeOffset? transactionDate = null)
-    {
-        return BuyAsset(
-            AssetSymbol.Create(assetSymbol),
-            Quantity.Create(quantity),
-            Money.Create(price),
-            transactionDate);
-    }
-
-    // Sell an asset
-    public Transaction SellAsset(
-        AssetSymbol assetSymbol,
-        Quantity quantity,
-        Money price,
-        DateTimeOffset? transactionDate = null)
-    {
-        // Verify we have enough of the asset to sell
-        var existingPosition = FindPositionBySymbol(assetSymbol.Value);
-        if (existingPosition == null || existingPosition.Quantity.Value < quantity.Value)
-            throw new InvalidOperationException($"Cannot sell {quantity.Value} of {assetSymbol.Value}: insufficient position");
-
-        var transaction = Transaction.CreateSellTransaction(
-            Id,
-            assetSymbol,
-            quantity,
-            price,
-            transactionDate);
-
-        ProcessTransaction(transaction);
-
-        return transaction;
-    }
-
-    // Sell an asset (convenience overload)
-    public Transaction SellAsset(
-        string assetSymbol,
-        int quantity,
-        decimal price,
-        DateTimeOffset? transactionDate = null)
-    {
-        return SellAsset(
-            AssetSymbol.Create(assetSymbol),
-            Quantity.Create(quantity),
-            Money.Create(price),
-            transactionDate);
-    }
-
-    // Find a position by asset symbol
     public Position? FindPositionBySymbol(string assetSymbol)
     {
         return _positions.FirstOrDefault(p => p.AssetSymbol.Value.Equals(assetSymbol, StringComparison.OrdinalIgnoreCase));
     }
 
-    // Get all transactions for a specific asset
     public IReadOnlyList<Transaction> GetTransactionsForAsset(string assetSymbol)
     {
         return _transactions
@@ -195,7 +191,6 @@ public sealed class Portfolio : AggregateRoot
             .AsReadOnly();
     }
 
-    // Calculate total portfolio value based on each position's value
     public Money CalculateCurrentValue()
     {
         decimal totalValue = 0;
@@ -215,7 +210,6 @@ public sealed class Portfolio : AggregateRoot
         return Money.Create(totalValue);
     }
 
-    // Calculate total cost basis of the portfolio
     public Money CalculateTotalCostBasis()
     {
         decimal totalCost = 0;
@@ -228,7 +222,6 @@ public sealed class Portfolio : AggregateRoot
         return Money.Create(totalCost);
     }
 
-    // Update all positions with current market prices
     public void UpdatePositionsMarketValue(Dictionary<string, decimal> currentPrices)
     {
         foreach (var position in _positions)
@@ -248,7 +241,6 @@ public sealed class Portfolio : AggregateRoot
         AddDomainEvent(new PortfolioValuationUpdatedEvent(Id, totalValue.Value, profitLoss, profitLossPercentage));
     }
 
-    // Rename the portfolio
     public void Rename(string newName)
     {
         if (string.IsNullOrWhiteSpace(newName))
@@ -259,13 +251,11 @@ public sealed class Portfolio : AggregateRoot
         AddDomainEvent(new PortfolioRenamedEvent(Id, newName));
     }
 
-    // Update the description
     public void UpdateDescription(string? newDescription)
     {
         Description = newDescription;
     }
 
-    // Delete the portfolio
     public void Delete()
     {
         AddDomainEvent(new PortfolioDeletedEvent(Id));

@@ -1,6 +1,9 @@
 ﻿using System.Net;
 
 using FinnHub.PortfolioManagement.Application.Commands.CreatePortfolio;
+using FinnHub.PortfolioManagement.Application.Commands.RegisterBuyAsset;
+using FinnHub.PortfolioManagement.Application.Commands.RegisterSellAsset;
+using FinnHub.PortfolioManagement.WebApi.Models;
 
 using MediatR;
 
@@ -24,8 +27,42 @@ public class PortfolioController(ISender sender) : ControllerBase
     {
         var result = await sender.Send(request, cancellationToken);
 
-        return result.IsSuccess 
-            ? HandleResponse(result, HttpStatusCode.Created) 
+        return result.IsSuccess
+            ? HandleResponse(result, HttpStatusCode.Created)
+            : HandleResponse(result);
+    }
+
+    [HttpPost("{id:guid}/transactions/buy")]
+    [ProducesResponseType<RegisterBuyAssetResponse>(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+    public async Task<IActionResult> RegisterBuyTransaction(
+        [FromRoute] Guid id,
+        [FromBody] RegisterTransactionModel request,
+        CancellationToken cancellationToken
+    )
+    {
+        var result = await sender.Send(request.ToBuyAssetRequest(id), cancellationToken);
+
+        return result.IsSuccess
+            ? HandleResponse(result, HttpStatusCode.Created)
+            : HandleResponse(result);
+    }
+
+    [HttpPost("{id:guid}/transactions/sell")]
+    [ProducesResponseType<RegisterSellAssetResponse>(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+    public async Task<IActionResult> RegisterSellTransaction(
+        [FromRoute] Guid id,
+        [FromBody] RegisterTransactionModel request,
+        CancellationToken cancellationToken
+    )
+    {
+        var result = await sender.Send(request.ToSellAssetRequest(id), cancellationToken);
+
+        return result.IsSuccess
+            ? HandleResponse(result, HttpStatusCode.Created)
             : HandleResponse(result);
     }
 }

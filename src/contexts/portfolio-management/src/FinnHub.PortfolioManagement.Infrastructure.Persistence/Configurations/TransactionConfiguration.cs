@@ -41,7 +41,7 @@ internal sealed class TransactionConfiguration : IEntityTypeConfiguration<Transa
             .IsRequired()
             .HasMaxLength(10);
 
-        builder.OwnsOne(p => p.Price, averageCost =>
+        builder.ComplexProperty(p => p.Price, averageCost =>
         {
             averageCost.Property(m => m.Value)
                 .HasPrecision(18, 2)
@@ -53,16 +53,16 @@ internal sealed class TransactionConfiguration : IEntityTypeConfiguration<Transa
                 .IsRequired();
         });
 
-        builder.OwnsOne(p => p.CurrentMarketValue, c =>
+        builder.ComplexProperty(p => p.CurrentMarketValue, c =>
         {
             c.Property(m => m.Value)
-                .HasPrecision(18, 2);
+                .HasPrecision(18, 2)
+                .IsRequired();
 
             c.Property(m => m.Currency)
                 .HasConversion<string>()
-                .HasMaxLength(3);
+                .HasMaxLength(3)
+                .IsRequired();
         });
-
-        builder.Navigation(t => t.CurrentMarketValue).IsRequired(false);
     }
 }

@@ -16,7 +16,7 @@ public sealed class Transaction : Entity
     public Quantity Quantity { get; private set; }
     public Money Price { get; private set; }
     public DateTimeOffset TransactionDate { get; private set; }
-    public Money? CurrentMarketValue { get; private set; }
+    public Money CurrentMarketValue { get; private set; }
     public bool IsSettled { get; private set; }
 
     #region EF Constructor
@@ -31,6 +31,7 @@ public sealed class Transaction : Entity
         TransactionType type,
         Quantity quantity,
         Money price,
+        Money currentMarketValue,
         DateTimeOffset transactionDate)
     {
         PortfolioId = portfolioId;
@@ -38,6 +39,7 @@ public sealed class Transaction : Entity
         Type = type;
         Quantity = quantity;
         Price = price;
+        CurrentMarketValue = currentMarketValue;
         TransactionDate = transactionDate;
         IsSettled = false;
     }
@@ -47,6 +49,7 @@ public sealed class Transaction : Entity
         AssetSymbol assetSymbol,
         Quantity quantity,
         Money price,
+        Money currentMarketValue,
         DateTimeOffset? transactionDate = null)
     {
         if (quantity.Value <= 0)
@@ -55,13 +58,17 @@ public sealed class Transaction : Entity
         if (price.Value <= 0)
             throw new ArgumentException("Price must be positive for a buy transaction", nameof(price));
 
+        if (currentMarketValue.Value < 0)
+            throw new ArgumentException("Current market value must be positive for a buy transaction", nameof(currentMarketValue));
+
         return new Transaction(
             portfolioId,
             assetSymbol,
             TransactionType.Buy,
             quantity,
             price,
-            transactionDate ?? DateTimeOffset.UtcNow);
+            currentMarketValue,
+            (transactionDate ?? DateTimeOffset.UtcNow).ToUniversalTime());
     }
 
     public static Transaction CreateSellTransaction(
@@ -77,13 +84,15 @@ public sealed class Transaction : Entity
         if (price.Value <= 0)
             throw new ArgumentException("Price must be positive for a sell transaction", nameof(price));
 
+
         return new Transaction(
             portfolioId,
             assetSymbol,
             TransactionType.Sell,
             quantity,
             price,
-            transactionDate ?? DateTimeOffset.UtcNow);
+            price,
+            (transactionDate ?? DateTimeOffset.UtcNow).ToUniversalTime());
     }
 
     public static Transaction Create(
@@ -92,11 +101,12 @@ public sealed class Transaction : Entity
         TransactionType type,
         Quantity quantity,
         Money price,
+        Money currentMarketValue,
         DateTimeOffset? transactionDate = null)
     {
         return type switch
         {
-            TransactionType.Buy => CreateBuyTransaction(portfolioId, assetSymbol, quantity, price, transactionDate),
+            TransactionType.Buy => CreateBuyTransaction(portfolioId, assetSymbol, quantity, price, currentMarketValue, transactionDate),
             TransactionType.Sell => CreateSellTransaction(portfolioId, assetSymbol, quantity, price, transactionDate),
             _ => throw new ArgumentOutOfRangeException(nameof(type), "Transaction type must be Buy or Sell")
         };
@@ -108,6 +118,7 @@ public sealed class Transaction : Entity
         TransactionType type,
         int quantity,
         decimal price,
+        decimal currentMarketValue,
         DateTimeOffset? transactionDate = null)
     {
         return Create(
@@ -116,6 +127,7 @@ public sealed class Transaction : Entity
             type,
             Quantity.Create(quantity),
             Money.Create(price),
+            Money.Create(currentMarketValue),
             transactionDate);
     }
 
@@ -181,7 +193,7 @@ public sealed class Transaction : Entity
     {
         if (existingPosition == null)
         {
-            return Position.Create(AssetSymbol, Quantity, Price);
+            return Position.Create(AssetSymbol, Quantity, Price, CurrentMarketValue);
         }
 
         var totalCostBefore = existingPosition.AverageCost.Value * existingPosition.Quantity.Value;
@@ -192,7 +204,9 @@ public sealed class Transaction : Entity
         return Position.Create(
             AssetSymbol,
             Quantity.Create(totalQuantity),
-            Money.Create(newAverageCost));
+            Money.Create(newAverageCost),
+            existingPosition.CurrentMarketValue
+        );
     }
 
     private Position ApplySellTransaction(Position? existingPosition)
@@ -207,11 +221,13 @@ public sealed class Transaction : Entity
 
         // If sold everything, return null or empty position
         if (remainingQuantity == 0)
-            return Position.Create(AssetSymbol, Quantity.Create(0), existingPosition.AverageCost);
+            return Position.Create(AssetSymbol, Quantity.Create(0), existingPosition.AverageCost, existingPosition.CurrentMarketValue);
 
         return Position.Create(
             AssetSymbol,
             Quantity.Create(remainingQuantity),
-            existingPosition.AverageCost);
+            existingPosition.AverageCost,
+            existingPosition.CurrentMarketValue
+        );
     }
 }

@@ -34,11 +34,11 @@ internal sealed class PortfolioConfiguration : IEntityTypeConfiguration<Portfoli
         builder.HasMany(p => p.Positions)
             .WithOne()
             .HasForeignKey(p => p.PortfolioId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasMany(p => p.Transactions)
             .WithOne()
             .HasForeignKey(p => p.PortfolioId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }
