@@ -9,5 +9,5 @@ internal sealed record AuthenticationSettings
     public required string JwtSecret { get; init; }
 
     [Required]
-    public TimeSpan JwtExpiration { get; init; }
+    public int JwtExpiration { get; init; }
 }

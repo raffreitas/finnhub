@@ -1,18 +1,22 @@
 ﻿using System.Net;
 using System.Text.Json;
 
+using FinnHub.PortfolioManagement.Application.Abstractions.MarketData;
 using FinnHub.PortfolioManagement.Application.Commands.CreatePortfolio;
 using FinnHub.PortfolioManagement.Domain.Aggregates;
 using FinnHub.PortfolioManagement.WebApi.Models;
 using FinnHub.PortfolioManagement.WebApi.Tests.Common;
 using FinnHub.PortfolioManagement.WebApi.Tests.Common.Authentication;
 
+using NSubstitute;
+
 using Shouldly;
 
 namespace FinnHub.PortfolioManagement.WebApi.Tests.Controllers;
 public class PortfolioControllerTests(WebApiFactory factory) : WebApiTestFixture(factory)
 {
-    private readonly Portfolio _fakePortfolio = factory.FakePortfolio;
+    private readonly Portfolio _portfolioMock = factory.PortfolioMock;
+    private readonly IMarketDataService _marketDataServiceMock = factory.MarketDataServiceMock;
 
     #region CreatePortfolio
     [Fact(DisplayName = nameof(CreatePortfolio_ShouldReturnCreated_WhenRequestIsValid))]
@@ -41,8 +45,8 @@ public class PortfolioControllerTests(WebApiFactory factory) : WebApiTestFixture
     public async Task CreatePortfolio_ShouldReturnConflict_WhenPortfolioNameIsTaken()
     {
         // Arrange
-        var request = new CreatePortfolioRequest { Name = _fakePortfolio.Name };
-        var token = new JwtTokenBuilder().WithUserId(_fakePortfolio.UserId).Build();
+        var request = new CreatePortfolioRequest { Name = _portfolioMock.Name };
+        var token = new JwtTokenBuilder().WithUserId(_portfolioMock.UserId).Build();
 
         // Act
         var response = await PostAsync("/api/v1/portfolios", request, token);
@@ -68,9 +72,13 @@ public class PortfolioControllerTests(WebApiFactory factory) : WebApiTestFixture
             TransactionDate = Faker.Date.Recent()
         };
 
-        var portfolioId = _fakePortfolio.Id;
+        _marketDataServiceMock
+            .GetCurrentMarketValueAsync(request.AssetSymbol, Arg.Any<CancellationToken>())
+            .Returns(Faker.Finance.Amount(10, 100));
+
+        var portfolioId = _portfolioMock.Id;
         var token = new JwtTokenBuilder()
-            .WithUserId(_fakePortfolio.UserId)
+            .WithUserId(_portfolioMock.UserId)
             .Build();
 
         // Act
@@ -100,7 +108,7 @@ public class PortfolioControllerTests(WebApiFactory factory) : WebApiTestFixture
 
         var portfolioId = Guid.NewGuid();
         var token = new JwtTokenBuilder()
-            .WithUserId(_fakePortfolio.UserId)
+            .WithUserId(_portfolioMock.UserId)
             .Build();
 
         // Act
@@ -125,7 +133,7 @@ public class PortfolioControllerTests(WebApiFactory factory) : WebApiTestFixture
 
         var portfolioId = Guid.NewGuid();
         var token = new JwtTokenBuilder()
-            .WithUserId(_fakePortfolio.UserId)
+            .WithUserId(_portfolioMock.UserId)
             .Build();
 
         // Act
@@ -144,15 +152,15 @@ public class PortfolioControllerTests(WebApiFactory factory) : WebApiTestFixture
         // Arrange
         var request = new RegisterTransactionModel
         {
-            AssetSymbol = _fakePortfolio.Positions[0].AssetSymbol.Value,
+            AssetSymbol = _portfolioMock.Positions[0].AssetSymbol.Value,
             PricePerUnit = Faker.Finance.Amount(),
-            Quantity = _fakePortfolio.Positions[0].Quantity - 1,
+            Quantity = _portfolioMock.Positions[0].Quantity - 1,
             TransactionDate = Faker.Date.Recent()
         };
 
-        var portfolioId = _fakePortfolio.Id;
+        var portfolioId = _portfolioMock.Id;
         var token = new JwtTokenBuilder()
-            .WithUserId(_fakePortfolio.UserId)
+            .WithUserId(_portfolioMock.UserId)
             .Build();
 
         // Act
@@ -182,7 +190,7 @@ public class PortfolioControllerTests(WebApiFactory factory) : WebApiTestFixture
 
         var portfolioId = Guid.NewGuid();
         var token = new JwtTokenBuilder()
-            .WithUserId(_fakePortfolio.UserId)
+            .WithUserId(_portfolioMock.UserId)
             .Build();
 
         // Act
@@ -207,7 +215,7 @@ public class PortfolioControllerTests(WebApiFactory factory) : WebApiTestFixture
 
         var portfolioId = Guid.NewGuid();
         var token = new JwtTokenBuilder()
-            .WithUserId(_fakePortfolio.UserId)
+            .WithUserId(_portfolioMock.UserId)
             .Build();
 
         // Act

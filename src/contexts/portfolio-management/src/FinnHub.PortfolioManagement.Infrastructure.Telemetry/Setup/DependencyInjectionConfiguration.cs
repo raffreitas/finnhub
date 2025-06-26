@@ -62,6 +62,7 @@ public static class DependencyInjectionConfiguration
                 .AddSource(settings.ServiceName)
                 .SetResourceBuilder(resourceBuilder)
                 .AddAspNetCoreInstrumentation()
+                .AddHttpClientInstrumentation()
                 .AddNpgsql()
                 .AddEntityFrameworkCoreInstrumentation(cfg => cfg.SetDbStatementForText = true)
                 .AddOtlpExporter(cfg =>

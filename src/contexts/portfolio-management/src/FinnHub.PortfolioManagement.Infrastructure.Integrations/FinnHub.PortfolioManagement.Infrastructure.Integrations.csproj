@@ -8,6 +8,12 @@
 
   <ItemGroup>
     <PackageReference Include="FinnHub.Shared.Infrastructure" Version="1.0.0" />
+    <PackageReference Include="Flurl" Version="4.0.0" />
+    <PackageReference Include="Flurl.Http" Version="4.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FinnHub.PortfolioManagement.Application\FinnHub.PortfolioManagement.Application.csproj" />
   </ItemGroup>
 
 </Project>

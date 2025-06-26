@@ -12,7 +12,6 @@ internal sealed class PortfolioRepository(ApplicationDbContext dbContext) : IPor
 
     public Task<Portfolio?> GetByIdAsync(Guid userId, Guid id, CancellationToken cancellationToken = default)
         => dbContext.Portfolios
-            .AsSplitQuery()
             .Include(x => x.Transactions)
             .Include(x => x.Positions)
             .FirstOrDefaultAsync(p => p.UserId == userId && p.Id == id, cancellationToken);

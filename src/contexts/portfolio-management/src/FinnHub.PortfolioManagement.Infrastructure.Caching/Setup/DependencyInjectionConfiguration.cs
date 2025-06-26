@@ -1,4 +1,6 @@
-﻿using FinnHub.PortfolioManagement.Infrastructure.Caching.Settings;
+﻿using FinnHub.PortfolioManagement.Infrastructure.Caching.Abstractions;
+using FinnHub.PortfolioManagement.Infrastructure.Caching.Services;
+using FinnHub.PortfolioManagement.Infrastructure.Caching.Settings;
 using FinnHub.Shared.Infrastructure.Extensions;
 
 using Microsoft.Extensions.Caching.Hybrid;
@@ -13,19 +15,19 @@ public static class DependencyInjectionConfiguration
     {
         var settings = services.GetAndConfigureSettings<CacheSettings>(configuration, CacheSettings.SectionName);
 
-        services.AddHybridCache(options =>
+        services.AddHybridCache(options => options.DefaultEntryOptions = new HybridCacheEntryOptions
         {
-            options.DefaultEntryOptions = new HybridCacheEntryOptions
-            {
-                LocalCacheExpiration = TimeSpan.FromMinutes(settings.DefaultExpirationInMinutes),
-                Expiration = TimeSpan.FromMinutes(settings.DefaultExpirationInMinutes)
-            };
+            LocalCacheExpiration = TimeSpan.FromMinutes(settings.DefaultExpirationInMinutes),
+            Expiration = TimeSpan.FromMinutes(settings.DefaultExpirationInMinutes)
         });
         services.AddStackExchangeRedisCache(options =>
         {
             options.Configuration = settings.ConnectionString;
             options.InstanceName = settings.CacheName;
         });
+
+        services.AddScoped<ICacheService, HybridCacheService>();
+
         return services;
     }
 }

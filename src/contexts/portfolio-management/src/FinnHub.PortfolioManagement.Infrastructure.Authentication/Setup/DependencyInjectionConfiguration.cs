@@ -1,5 +1,6 @@
 ﻿using System.Text;
 
+using FinnHub.PortfolioManagement.Application.Abstractions.Tokens;
 using FinnHub.PortfolioManagement.Application.Abstractions.Users;
 using FinnHub.PortfolioManagement.Infrastructure.Authentication.Services;
 using FinnHub.PortfolioManagement.Infrastructure.Authentication.Settings;
@@ -23,6 +24,7 @@ public static class DependencyInjectionConfiguration
         services.AddJwtAuthentication(settings);
 
         services.AddScoped<IUserContext, UserContextService>();
+        services.AddScoped<ITokenService, TokenService>();
 
         return services;
     }

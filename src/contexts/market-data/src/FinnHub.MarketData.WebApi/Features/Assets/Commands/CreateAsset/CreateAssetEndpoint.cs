@@ -29,6 +29,7 @@ internal sealed class CreateAssetEndpoint : IEndpoint
         })
             .RequireAuthorization()
             .ProducesProblem(StatusCodes.Status422UnprocessableEntity)
-            .ProducesProblem(StatusCodes.Status400BadRequest);
+            .ProducesProblem(StatusCodes.Status400BadRequest)
+            .WithTags(EndpointTags.Assets);
     }
 }

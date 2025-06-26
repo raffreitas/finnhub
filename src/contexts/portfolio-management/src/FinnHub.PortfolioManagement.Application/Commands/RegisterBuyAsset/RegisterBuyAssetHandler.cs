@@ -1,4 +1,5 @@
 ﻿using FinnHub.PortfolioManagement.Application.Abstractions;
+using FinnHub.PortfolioManagement.Application.Abstractions.MarketData;
 using FinnHub.PortfolioManagement.Application.Abstractions.Users;
 using FinnHub.PortfolioManagement.Application.Errors;
 using FinnHub.PortfolioManagement.Domain.Aggregates.Repositories;
@@ -12,7 +13,8 @@ namespace FinnHub.PortfolioManagement.Application.Commands.RegisterBuyAsset;
 internal sealed class RegisterBuyAssetHandler(
     IPortfolioRepository portfolioRepository,
     IUnitOfWork unitOfWork,
-    IUserContext userContext
+    IUserContext userContext,
+    IMarketDataService marketDataService
 ) : IRequestHandler<RegisterBuyAssetRequest, Result<RegisterBuyAssetResponse>>
 {
     public async Task<Result<RegisterBuyAssetResponse>> Handle(RegisterBuyAssetRequest request, CancellationToken cancellationToken)
@@ -26,8 +28,7 @@ internal sealed class RegisterBuyAssetHandler(
         if (portfolio is null)
             return Result.Failure<RegisterBuyAssetResponse>(PortfolioErrors.PortfolioNotFound);
 
-        // TODO: Implement logic to call market data service to get the current market value of the asset
-        var currentMarketValue = 0;
+        var currentMarketValue = await marketDataService.GetCurrentMarketValueAsync(request.AssetSymbol, cancellationToken);
 
         var transaction = portfolio.BuyAsset(
               request.AssetSymbol,

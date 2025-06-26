@@ -9,6 +9,8 @@ services:
       - POSTGRESQL_PASSWORD=postgres
     volumes:
       - postgresql_data:/bitnami/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
 
   finnhub.nosqldb:
     image: bitnami/mongodb:latest
@@ -23,6 +25,11 @@ services:
       - MONGODB_DATABASE=finnhub_db
     volumes:
       - mongodb_data:/bitnami/mongodb
+    healthcheck:
+      test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
   finnhub.rabbitmq:
     image: rabbitmq:4-management
@@ -35,6 +42,22 @@ services:
       - RABBITMQ_DEFAULT_PASS=guest
     healthcheck:
       test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  finnhub.redis:
+    image: bitnami/redis:latest
+    container_name: finnhub.redis
+    ports:
+      - "6379:6379"
+    environment:
+      - REDIS_PASSWORD=redis123
+      - REDIS_AOF_ENABLED=yes
+    volumes:
+      - redis_data:/bitnami/redis/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
       interval: 30s
       timeout: 10s
       retries: 5
@@ -76,3 +99,4 @@ services:
 volumes:
   mongodb_data:
   postgresql_data:
+  redis_data:

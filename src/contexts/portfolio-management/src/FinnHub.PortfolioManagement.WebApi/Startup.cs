@@ -1,5 +1,7 @@
 ﻿using FinnHub.PortfolioManagement.Application.Setup;
 using FinnHub.PortfolioManagement.Infrastructure.Authentication.Setup;
+using FinnHub.PortfolioManagement.Infrastructure.Caching.Setup;
+using FinnHub.PortfolioManagement.Infrastructure.Integrations.Setup;
 using FinnHub.PortfolioManagement.Infrastructure.Persistence.Setup;
 using FinnHub.PortfolioManagement.Infrastructure.Telemetry.Setup;
 using FinnHub.PortfolioManagement.WebApi.Setup;
@@ -16,9 +18,13 @@ public static class StartupHelper
         builder.AddTelemetryConfiguration();
         services.AddPresentationConfiguration();
         services.AddOpenApiConfiguration();
+
+        services.AddApplicationConfiguration();
+
         services.AddPersistenceConfiguration(configuration);
         services.AddAuthenticationConfiguration(configuration);
-        services.AddApplicationConfiguration();
+        services.AddIntegrationsConfiguration(configuration);
+        services.AddCachingConfiguration(configuration);
     }
 
     public static void ConfigureApp(WebApplication app)
