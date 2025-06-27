@@ -10,6 +10,7 @@
     <PackageReference Include="FinnHub.Shared.Infrastructure" Version="1.0.0" />
     <PackageReference Include="Flurl" Version="4.0.0" />
     <PackageReference Include="Flurl.Http" Version="4.0.2" />
+    <PackageReference Include="Polly" Version="8.6.1" />
   </ItemGroup>
 
   <ItemGroup>

@@ -3,6 +3,7 @@
 using FinnHub.PortfolioManagement.Application.Commands.CreatePortfolio;
 using FinnHub.PortfolioManagement.Application.Commands.RegisterBuyAsset;
 using FinnHub.PortfolioManagement.Application.Commands.RegisterSellAsset;
+using FinnHub.PortfolioManagement.Application.Queries.GetPortfoliosSummaryList;
 using FinnHub.PortfolioManagement.WebApi.Models;
 
 using MediatR;
@@ -63,6 +64,19 @@ public class PortfolioController(ISender sender) : ControllerBase
 
         return result.IsSuccess
             ? HandleResponse(result, HttpStatusCode.Created)
+            : HandleResponse(result);
+    }
+
+    [HttpGet("summary")]
+    [ProducesResponseType<GetPortfoliosSummaryListResponse>(StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetPortfoliosSummaryList(
+        [FromQuery] GetPortfoliosSummaryListRequest query,
+        CancellationToken cancellationToken
+    )
+    {
+        var result = await sender.Send(query, cancellationToken);
+        return result.IsSuccess
+            ? HandleResponse(result, HttpStatusCode.OK)
             : HandleResponse(result);
     }
 }

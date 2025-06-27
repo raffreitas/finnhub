@@ -28,13 +28,17 @@ internal sealed class RegisterBuyAssetHandler(
         if (portfolio is null)
             return Result.Failure<RegisterBuyAssetResponse>(PortfolioErrors.PortfolioNotFound);
 
-        var currentMarketValue = await marketDataService.GetCurrentMarketValueAsync(request.AssetSymbol, cancellationToken);
+        var currentMarketValueResult = await marketDataService
+            .GetCurrentMarketValueAsync(request.AssetSymbol, cancellationToken);
+
+        if (currentMarketValueResult.IsFailure)
+            return Result.Failure<RegisterBuyAssetResponse>(currentMarketValueResult.Error);
 
         var transaction = portfolio.BuyAsset(
               request.AssetSymbol,
               request.Quantity,
               request.PricePerUnit,
-              currentMarketValue,
+              currentMarketValueResult.Value,
               request.TransactionDate
         );
 

@@ -2,6 +2,8 @@
 using FinnHub.PortfolioManagement.Application.Abstractions.Tokens;
 using FinnHub.PortfolioManagement.Infrastructure.Integrations.Services.MarketData.Models;
 using FinnHub.PortfolioManagement.Infrastructure.Integrations.Services.MarketData.Settings;
+using FinnHub.PortfolioManagement.Infrastructure.Integrations.Shared.Policies;
+using FinnHub.Shared.Core;
 
 using Flurl;
 using Flurl.Http;
@@ -17,21 +19,23 @@ internal sealed class MarketDataService(
 {
     private readonly MarketDataSettings _settings = options.Value;
 
-    public async Task<decimal> GetCurrentMarketValueAsync(string assetSymbol, CancellationToken cancellationToken)
+    public async Task<Result<decimal>> GetCurrentMarketValueAsync(string assetSymbol, CancellationToken cancellationToken)
     {
-        // TODO: Add resilience policies.
-        // TODO: Add caching to avoid unnecessary API calls.
-        // TODO: Add authentication
-        var accessToken = await tokenService.GetAccessToken();
+        var result = await PolicyFactory
+            .CreateDefaultPolicy<GetCurrentMarketValueResponse>()
+            .ExecuteAsync(async () =>
+            {
+                var accessToken = await tokenService.GetAccessToken();
+                return await $"{_settings.BaseUrl}"
+                   .AppendPathSegment("api/v1/quotes")
+                   .AppendPathSegment(assetSymbol)
+                   .AppendPathSegment("current-price")
+                   .WithOAuthBearerToken(accessToken)
+                   .GetJsonAsync<GetCurrentMarketValueResponse>(cancellationToken: cancellationToken);
+            });
 
-        var result = await $"{_settings.BaseUrl}"
-            .AppendPathSegment("api/v1/quotes")
-            .AppendPathSegment(assetSymbol)
-            .AppendPathSegment("current-price")
-            .WithOAuthBearerToken(accessToken)
-            .GetJsonAsync<GetCurrentMarketValueResponse>(cancellationToken: cancellationToken);
-
-        return result.CurrentPrice;
+        return result.IsFailure
+            ? Result.Failure<decimal>(result.Error)
+            : Result.Success(result.Value.CurrentPrice);
     }
-
 }

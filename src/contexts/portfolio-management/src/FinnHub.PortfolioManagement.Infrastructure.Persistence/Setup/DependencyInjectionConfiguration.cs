@@ -1,6 +1,8 @@
 ﻿using FinnHub.PortfolioManagement.Application.Abstractions;
+using FinnHub.PortfolioManagement.Application.Abstractions.Queries;
 using FinnHub.PortfolioManagement.Domain.Aggregates.Repositories;
 using FinnHub.PortfolioManagement.Infrastructure.Persistence.Context;
+using FinnHub.PortfolioManagement.Infrastructure.Persistence.Queries;
 using FinnHub.PortfolioManagement.Infrastructure.Persistence.Repositories;
 using FinnHub.PortfolioManagement.Infrastructure.Persistence.Settings;
 using FinnHub.PortfolioManagement.Infrastructure.Persistence.Shared;
@@ -28,6 +30,7 @@ public static class DependencyInjectionConfiguration
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IPortfolioRepository, PortfolioRepository>();
+        services.AddScoped<IPortfolioQueries, PortfolioQueries>();
 
         return services;
     }
