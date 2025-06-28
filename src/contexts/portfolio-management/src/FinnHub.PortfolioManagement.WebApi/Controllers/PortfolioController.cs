@@ -79,4 +79,19 @@ public class PortfolioController(ISender sender) : ControllerBase
             ? HandleResponse(result, HttpStatusCode.OK)
             : HandleResponse(result);
     }
+
+    [HttpPut("{id:guid}")]
+    [ProducesResponseType<GetPortfoliosSummaryListResponse>(StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetPortfoliosSummaryList(
+        [FromRoute] Guid id,
+        [FromBody] UpdatePortfolioModel model,
+        CancellationToken cancellationToken
+    )
+    {
+        var result = await sender.Send(model.ToRequest(id), cancellationToken);
+
+        return result.IsSuccess
+            ? HandleResponse(result, HttpStatusCode.NoContent)
+            : HandleResponse(result);
+    }
 }

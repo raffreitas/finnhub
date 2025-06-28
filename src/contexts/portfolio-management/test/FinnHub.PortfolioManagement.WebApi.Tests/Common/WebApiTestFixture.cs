@@ -18,6 +18,12 @@ public abstract class WebApiTestFixture(WebApiFactory factory) : IClassFixture<W
         return await _httpClient.PostAsJsonAsync(method, request);
     }
 
+    protected async Task<HttpResponseMessage> PutAsync<T>(string method, T request, string token = "")
+    {
+        AuthenticateRequest(token);
+
+        return await _httpClient.PutAsJsonAsync(method, request);
+    }
 
     private void AuthenticateRequest(string token)
     {

@@ -16,8 +16,18 @@ public class ControllerBase : Microsoft.AspNetCore.Mvc.ControllerBase
             : CustomResponse(result.Error);
     }
 
-    private ObjectResult CustomResponse<T>(HttpStatusCode statusCode, T? data)
+    protected ActionResult HandleResponse(Result result, HttpStatusCode? statusCode = HttpStatusCode.OK)
+    {
+        return result.IsSuccess
+            ? CustomResponse(statusCode ?? HttpStatusCode.OK)
+            : CustomResponse(result.Error);
+    }
+
+    private ObjectResult CustomResponse<T>(HttpStatusCode statusCode, T? data = default)
         => StatusCode((int)statusCode, data);
+
+    private StatusCodeResult CustomResponse(HttpStatusCode statusCode)
+        => StatusCode((int)statusCode);
 
     private static ObjectResult CustomResponse(Error error)
         => new(CustomProblemDetails(error));

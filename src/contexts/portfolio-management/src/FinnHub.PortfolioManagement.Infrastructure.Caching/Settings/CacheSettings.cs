@@ -5,7 +5,7 @@ internal sealed record CacheSettings
 {
     public const string SectionName = "CacheSettings";
 
-    [Required, Url]
+    [Required]
     public required string ConnectionString { get; init; }
 
     [Required, MinLength(1)]
