@@ -3,6 +3,7 @@
 using FinnHub.PortfolioManagement.Application.Commands.CreatePortfolio;
 using FinnHub.PortfolioManagement.Application.Commands.RegisterBuyAsset;
 using FinnHub.PortfolioManagement.Application.Commands.RegisterSellAsset;
+using FinnHub.PortfolioManagement.Application.Queries.GetPortfolioDetails;
 using FinnHub.PortfolioManagement.Application.Queries.GetPortfoliosSummaryList;
 using FinnHub.PortfolioManagement.WebApi.Models;
 
@@ -30,6 +31,24 @@ public class PortfolioController(ISender sender) : ControllerBase
 
         return result.IsSuccess
             ? HandleResponse(result, HttpStatusCode.Created)
+            : HandleResponse(result);
+    }
+
+    [HttpGet("{id:guid}")]
+    [ProducesResponseType<GetPortfolioDetailsResponse>(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetPortfolioDetails(
+        Guid id,
+        CancellationToken cancellationToken
+    )
+    {
+        var request = new GetPortfolioDetailsRequest { Id = id };
+
+        var result = await sender.Send(request, cancellationToken);
+
+        return result.IsSuccess
+            ? HandleResponse(result, HttpStatusCode.OK)
             : HandleResponse(result);
     }
 

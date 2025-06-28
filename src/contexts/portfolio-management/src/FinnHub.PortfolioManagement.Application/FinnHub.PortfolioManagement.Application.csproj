@@ -21,8 +21,4 @@
     <InternalsVisibleTo Include="FinnHub.PortfolioManagement.Application.Tests" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Abstractions\DataAccess\" />
-  </ItemGroup>
-
 </Project>
