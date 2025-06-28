@@ -8,7 +8,7 @@
 
   <PropertyGroup>
     <PackageId>FinnHub.Shared.Core</PackageId>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <Authors>Rafael Freitas</Authors>
     <Company>FinnHub</Company>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>

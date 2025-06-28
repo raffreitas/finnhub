@@ -10,4 +10,11 @@ public interface IPortfolioQueries
         PaginatedParams paginatedParams,
         CancellationToken cancellationToken = default
     );
+
+    Task<PaginatedResult<PortfolioTransactionsResponseDto>> GetTransactionsAsync(
+        Guid userId,
+        Guid portfolioId,
+        PaginatedParams paginatedParams,
+        CancellationToken cancellationToken = default
+    );
 }

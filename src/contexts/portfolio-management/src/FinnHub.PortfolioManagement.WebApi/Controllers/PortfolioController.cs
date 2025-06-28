@@ -5,7 +5,9 @@ using FinnHub.PortfolioManagement.Application.Commands.RegisterBuyAsset;
 using FinnHub.PortfolioManagement.Application.Commands.RegisterSellAsset;
 using FinnHub.PortfolioManagement.Application.Queries.GetPortfolioDetails;
 using FinnHub.PortfolioManagement.Application.Queries.GetPortfoliosSummaryList;
+using FinnHub.PortfolioManagement.Application.Queries.GetTransactionsList;
 using FinnHub.PortfolioManagement.WebApi.Models;
+using FinnHub.Shared.Core;
 
 using MediatR;
 
@@ -44,6 +46,28 @@ public class PortfolioController(ISender sender) : ControllerBase
     )
     {
         var request = new GetPortfolioDetailsRequest { Id = id };
+
+        var result = await sender.Send(request, cancellationToken);
+
+        return result.IsSuccess
+            ? HandleResponse(result, HttpStatusCode.OK)
+            : HandleResponse(result);
+    }
+
+    [HttpGet("{id:guid}/transactions")]
+    [ProducesResponseType<GetTransactionsListResponse>(StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetPortfolioTransactions(
+       [FromRoute] Guid id,
+       [FromQuery] PaginatedParams paginatedParams,
+       CancellationToken cancellationToken
+    )
+    {
+        var request = new GetTransactionsListRequest
+        {
+            PortfolioId = id,
+            PageNumber = paginatedParams.PageNumber,
+            PageSize = paginatedParams.PageSize
+        };
 
         var result = await sender.Send(request, cancellationToken);
 
