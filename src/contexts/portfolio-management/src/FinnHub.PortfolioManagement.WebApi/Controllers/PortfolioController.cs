@@ -100,7 +100,7 @@ public class PortfolioController(ISender sender) : ControllerBase
     }
 
     [HttpPut("{id:guid}")]
-    [ProducesResponseType<GetPortfoliosSummaryListResponse>(StatusCodes.Status200OK)]
+    [ProducesResponseType<GetPortfoliosSummaryListResponse>(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> GetPortfoliosSummaryList(
         [FromRoute] Guid id,
         [FromBody] UpdatePortfolioModel model,
