@@ -1,4 +1,6 @@
-﻿namespace FinnHub.MarketData.WebApi.Shared.Presentation.Endpoints;
+﻿using Microsoft.AspNetCore.Routing;
+
+namespace FinnHub.MarketData.WebApi.Shared.Presentation.Endpoints;
 
 public interface IEndpoint
 {

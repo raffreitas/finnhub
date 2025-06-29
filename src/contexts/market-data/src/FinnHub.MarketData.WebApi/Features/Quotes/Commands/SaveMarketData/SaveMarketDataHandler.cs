@@ -4,7 +4,7 @@ using FinnHub.Shared.Core;
 
 namespace FinnHub.MarketData.WebApi.Features.Quotes.Commands.SaveMarketData;
 
-internal sealed class SaveMarketDataHandler(IQuoteRepository quoteRepository)
+public sealed class SaveMarketDataHandler(IQuoteRepository quoteRepository)
 {
     public async Task<Result> Handle(SaveMarketDataCommand command, CancellationToken cancellationToken)
     {

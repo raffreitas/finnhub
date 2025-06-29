@@ -1,20 +1,20 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Worker">
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>cd94b651-e613-4440-9661-9dda54d99cad</UserSecretsId>
+    <UserSecretsId>dotnet-FinnHub.MarketData.Ingestion-25f507c0-6bbf-44de-9794-606d806bc62b</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..</DockerfileContext>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FinnHub.Shared.Kernel" Version="1.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.6" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\FinnHub.MarketData.Shared\FinnHub.MarketData.Shared.csproj" />
+    <ProjectReference Include="..\FinnHub.MarketData.WebApi\FinnHub.MarketData.WebApi.csproj" />
   </ItemGroup>
-
 </Project>

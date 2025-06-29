@@ -1,9 +1,9 @@
-﻿using FinnHub.MarketData.WebApi.Features.Assets.Domain.Entities;
+﻿using FinnHub.MarketData.Shared.Infrastructure.Messaging.Services;
+using FinnHub.MarketData.WebApi.Features.Assets.Domain.Entities;
 using FinnHub.MarketData.WebApi.Features.Assets.Domain.Enums;
 using FinnHub.MarketData.WebApi.Features.Assets.Domain.Events;
 using FinnHub.MarketData.WebApi.Features.Assets.Domain.Repositories;
 using FinnHub.MarketData.WebApi.Features.Assets.Errors;
-using FinnHub.MarketData.WebApi.Shared.Infrastructure.Messaging.Services;
 using FinnHub.Shared.Core;
 using FinnHub.Shared.Core.Extensions;
 

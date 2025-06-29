@@ -1,8 +1,8 @@
-﻿using FinnHub.MarketData.WebApi.Features;
-using FinnHub.MarketData.WebApi.Shared.Infrastructure.Authentication.Setup;
-using FinnHub.MarketData.WebApi.Shared.Infrastructure.Database.Setup;
-using FinnHub.MarketData.WebApi.Shared.Infrastructure.Messaging.Setup;
-using FinnHub.MarketData.WebApi.Shared.Infrastructure.Telemetry.Setup;
+﻿using FinnHub.MarketData.Shared.Infrastructure.Authentication.Setup;
+using FinnHub.MarketData.Shared.Infrastructure.Database.Setup;
+using FinnHub.MarketData.Shared.Infrastructure.Messaging.Setup;
+using FinnHub.MarketData.Shared.Infrastructure.Telemetry.Setup;
+using FinnHub.MarketData.WebApi.Features;
 using FinnHub.MarketData.WebApi.Shared.Presentation.Setup;
 
 namespace FinnHub.MarketData.WebApi;
@@ -14,8 +14,7 @@ public static class StartupHelper
         var configuration = builder.Configuration;
         var services = builder.Services;
 
-        builder.AddTelemetryConfiguration();
-
+        services.AddTelemetryConfiguration(configuration);
         services.AddAuthenticationConfiguration(configuration);
         services.AddDatabaseConfiguration(configuration);
         services.AddMessagingConfiguration(configuration);

@@ -7,9 +7,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinnHub.MarketData.WebApi",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinnHub.MarketData.WebApi.Tests", "test\FinnHub.MarketData.WebApi.Tests\FinnHub.MarketData.WebApi.Tests.csproj", "{6D9509D9-C537-4E81-8419-FFE7D9ADB5D1}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Services", "2 - Services", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{33A865AC-170A-4A6B-88E6-6FE9F38A19F8}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Tests", "3 - Tests", "{33A865AC-170A-4A6B-88E6-6FE9F38A19F8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinnHub.MarketData.Ingestion", "src\FinnHub.MarketData.Ingestion\FinnHub.MarketData.Ingestion.csproj", "{D0B3662A-D0CC-48EF-9AD4-68DA2B6D192C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinnHub.MarketData.Shared", "src\FinnHub.MarketData.Shared\FinnHub.MarketData.Shared.csproj", "{E450B596-D5AF-4916-A9FB-55C352CD209D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Workers", "1 - Workers", "{A413FAED-802B-4721-8811-D23B42BA6764}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinnHub.MarketData.Processor", "src\FinnHub.MarketData.Processor\FinnHub.MarketData.Processor.csproj", "{D4FC932C-ED7F-4747-B70B-52E81C1A8D64}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,6 +33,18 @@ Global
 		{6D9509D9-C537-4E81-8419-FFE7D9ADB5D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D9509D9-C537-4E81-8419-FFE7D9ADB5D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D9509D9-C537-4E81-8419-FFE7D9ADB5D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0B3662A-D0CC-48EF-9AD4-68DA2B6D192C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0B3662A-D0CC-48EF-9AD4-68DA2B6D192C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0B3662A-D0CC-48EF-9AD4-68DA2B6D192C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0B3662A-D0CC-48EF-9AD4-68DA2B6D192C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E450B596-D5AF-4916-A9FB-55C352CD209D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E450B596-D5AF-4916-A9FB-55C352CD209D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E450B596-D5AF-4916-A9FB-55C352CD209D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E450B596-D5AF-4916-A9FB-55C352CD209D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4FC932C-ED7F-4747-B70B-52E81C1A8D64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4FC932C-ED7F-4747-B70B-52E81C1A8D64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4FC932C-ED7F-4747-B70B-52E81C1A8D64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4FC932C-ED7F-4747-B70B-52E81C1A8D64}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -32,6 +52,9 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{5C641F8D-14F7-D2F1-2E6E-795F774EC1C2} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{6D9509D9-C537-4E81-8419-FFE7D9ADB5D1} = {33A865AC-170A-4A6B-88E6-6FE9F38A19F8}
+		{D0B3662A-D0CC-48EF-9AD4-68DA2B6D192C} = {A413FAED-802B-4721-8811-D23B42BA6764}
+		{E450B596-D5AF-4916-A9FB-55C352CD209D} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{D4FC932C-ED7F-4747-B70B-52E81C1A8D64} = {A413FAED-802B-4721-8811-D23B42BA6764}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5FF5C506-2258-4CAC-9ED1-FD67426C7DBF}
