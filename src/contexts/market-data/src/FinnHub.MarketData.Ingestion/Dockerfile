@@ -10,7 +10,7 @@ COPY ["src/FinnHub.MarketData.Ingestion/FinnHub.MarketData.Ingestion.csproj", "F
 COPY ["src/FinnHub.MarketData.WebApi/FinnHub.MarketData.WebApi.csproj", "FinnHub.MarketData.WebApi/"]
 COPY ["src/FinnHub.MarketData.Shared/FinnHub.MarketData.Shared.csproj", "FinnHub.MarketData.Shared/"]
 
-RUN dotnet restore "./src/FinnHub.MarketData.Ingestion/FinnHub.MarketData.Ingestion.csproj"
+RUN dotnet restore "./FinnHub.MarketData.Ingestion/FinnHub.MarketData.Ingestion.csproj"
 
 COPY ["src/", "."]
 
