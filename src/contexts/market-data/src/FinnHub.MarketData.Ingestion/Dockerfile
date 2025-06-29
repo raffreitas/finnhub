@@ -5,12 +5,16 @@ WORKDIR /app
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["src/FinnHub.MarketData.Ingestion/FinnHub.MarketData.Ingestion.csproj", "src/FinnHub.MarketData.Ingestion/"]
-COPY ["src/FinnHub.MarketData.WebApi/FinnHub.MarketData.WebApi.csproj", "src/FinnHub.MarketData.WebApi/"]
-COPY ["src/FinnHub.MarketData.Shared/FinnHub.MarketData.Shared.csproj", "src/FinnHub.MarketData.Shared/"]
+
+COPY ["src/FinnHub.MarketData.Ingestion/FinnHub.MarketData.Ingestion.csproj", "FinnHub.MarketData.Ingestion/"]
+COPY ["src/FinnHub.MarketData.WebApi/FinnHub.MarketData.WebApi.csproj", "FinnHub.MarketData.WebApi/"]
+COPY ["src/FinnHub.MarketData.Shared/FinnHub.MarketData.Shared.csproj", "FinnHub.MarketData.Shared/"]
+
 RUN dotnet restore "./src/FinnHub.MarketData.Ingestion/FinnHub.MarketData.Ingestion.csproj"
-COPY . .
-WORKDIR "/src/src/FinnHub.MarketData.Ingestion"
+
+COPY ["src/", "."]
+
+WORKDIR "/src/FinnHub.MarketData.Ingestion"
 RUN dotnet build "./FinnHub.MarketData.Ingestion.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
