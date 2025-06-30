@@ -13,13 +13,7 @@ internal sealed class GetPortfoliosSummaryListQuery(
 {
     public async Task<Result<GetPortfoliosSummaryListResponse>> Handle(GetPortfoliosSummaryListRequest request, CancellationToken cancellationToken)
     {
-
-
-        var paginatedParams = new PaginatedParams
-        {
-            PageNumber = request.PageNumber,
-            PageSize = request.PageSize
-        };
+        var paginatedParams = new PaginatedParams(request.PageNumber, request.PageSize);
         var response = await portfolioQueries.GetPortfoliosSummaryAsync(userContext.UserId, paginatedParams, cancellationToken);
         return new GetPortfoliosSummaryListResponse(response);
     }

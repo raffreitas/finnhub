@@ -20,7 +20,7 @@ internal class UpdatePortfolioHandler(
     {
         var validationResult = request.Validate();
         if (!validationResult.IsValid)
-            return Result<object>.ValidationFailure(validationResult.GetError()); // TODO: Add non generic validation result
+            return Result.ValidationFailure(validationResult.GetError());
 
         var portfolio = await portfolioRepository.GetByIdAsync(userContext.UserId, request.Id, cancellationToken);
 

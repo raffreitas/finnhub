@@ -12,12 +12,7 @@ internal sealed class GetTransactionsListHandler(
 {
     public async Task<Result<GetTransactionsListResponse>> Handle(GetTransactionsListRequest request, CancellationToken cancellationToken)
     {
-        // TODO: Implement PaginatedParams
-        var paginatedParams = new PaginatedParams
-        {
-            PageNumber = request.PageNumber == 0 ? 1 : request.PageNumber,
-            PageSize = request.PageSize == 0 ? 10 : request.PageSize
-        };
+        var paginatedParams = new PaginatedParams(request.PageNumber, request.PageSize);
 
         var result = await portfolioQueries.GetTransactionsAsync(
             userContext.UserId,
