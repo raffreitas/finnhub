@@ -3,9 +3,9 @@ using FinnHub.PortfolioManagement.WebApi;
 try
 {
     var builder = WebApplication.CreateBuilder(args);
-    StartupHelper.ConfigureServices(builder);
+    Startup.ConfigureServices(builder);
     var app = builder.Build();
-    StartupHelper.ConfigureApp(app);
+    Startup.ConfigureApp(app);
     await app.RunAsync();
 }
 catch (Exception ex)

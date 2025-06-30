@@ -6,7 +6,7 @@ using Shouldly;
 
 namespace FinnHub.PortfolioManagement.Domain.UnitTests.Aggregates;
 
-public class PortfolioTests(PortifolioTestsFixture fixture) : IClassFixture<PortifolioTestsFixture>
+public class PortfolioTests(PortfolioTestsFixture fixture) : IClassFixture<PortfolioTestsFixture>
 {
     [Fact(DisplayName = nameof(CreateBuyTransaction_ShouldCreateTransaction_WhenValidParameters))]
     [Trait("Domain", "Portfolio - Aggregates")]

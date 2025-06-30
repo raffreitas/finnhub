@@ -8,19 +8,17 @@ using FinnHub.PortfolioManagement.WebApi.Setup;
 
 namespace FinnHub.PortfolioManagement.WebApi;
 
-public static class StartupHelper
+public static class Startup
 {
     public static void ConfigureServices(WebApplicationBuilder builder)
     {
         var services = builder.Services;
         var configuration = builder.Configuration;
 
-        builder.AddTelemetryConfiguration();
         services.AddPresentationConfiguration();
         services.AddOpenApiConfiguration();
-
         services.AddApplicationConfiguration();
-
+        services.AddTelemetryConfiguration(configuration);
         services.AddPersistenceConfiguration(configuration);
         services.AddAuthenticationConfiguration(configuration);
         services.AddIntegrationsConfiguration(configuration);

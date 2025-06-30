@@ -9,6 +9,6 @@ public sealed class OutboxMessage
     public required string MessageType { get; set; }
     public required object MessageContent { get; set; }
     public object? Headers { get; set; }
-    public required int DeliveryAttempts { get; set; }
+    public int DeliveryAttempts { get; set; }
     public string? ErrorMessage { get; set; }
 }

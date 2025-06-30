@@ -5,6 +5,7 @@ using FinnHub.PortfolioManagement.Infrastructure.Telemetry.Settings;
 using FinnHub.Shared.Infrastructure.Extensions;
 
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -18,22 +19,19 @@ using OpenTelemetry.Trace;
 namespace FinnHub.PortfolioManagement.Infrastructure.Telemetry.Setup;
 public static class DependencyInjectionConfiguration
 {
-    public static WebApplicationBuilder AddTelemetryConfiguration(this WebApplicationBuilder builder)
+    public static IServiceCollection AddTelemetryConfiguration(this IServiceCollection services, IConfiguration configuration)
     {
-        var services = builder.Services;
-        var configuration = builder.Configuration;
-
-        var settings = services.GetAndConfigureSettings<TelemetrySettings>(configuration, TelemetrySettings.SectionName);
+        var settings = services.GetAndConfigureSettings<TelemetrySettings>(
+            configuration,
+            TelemetrySettings.SectionName
+        );
 
         if (settings.IsEnabled)
-        {
-            builder.ConfigureLogging(settings);
             services.ConfigureOpenTelemetry(settings);
-        }
 
         services.AddCorrelationConfiguration();
 
-        return builder;
+        return services;
     }
 
     public static WebApplication UseTelemetryConfiguration(this WebApplication app)
@@ -70,13 +68,6 @@ public static class DependencyInjectionConfiguration
                     cfg.Endpoint = new Uri(openTelemetryEndpoint);
                     cfg.Protocol = OpenTelemetry.Exporter.OtlpExportProtocol.Grpc;
                 }))
-            .WithLogging(builder => builder
-                .SetResourceBuilder(resourceBuilder)
-                .AddOtlpExporter(cfg =>
-                {
-                    cfg.Endpoint = new Uri(openTelemetryEndpoint);
-                    cfg.Protocol = OpenTelemetry.Exporter.OtlpExportProtocol.Grpc;
-                }))
             .WithMetrics(builder => builder
                 .SetResourceBuilder(resourceBuilder)
                 .AddAspNetCoreInstrumentation()
@@ -85,27 +76,19 @@ public static class DependencyInjectionConfiguration
                 {
                     cfg.Endpoint = new Uri(openTelemetryEndpoint);
                     cfg.Protocol = OpenTelemetry.Exporter.OtlpExportProtocol.Grpc;
-                }));
-    }
-
-    private static void ConfigureLogging(
-        this WebApplicationBuilder builder,
-        TelemetrySettings settings
-    )
-    {
-        var endpoint = settings.OpenTelemetryEndpoint
-            ?? throw new ArgumentException($"{nameof(TelemetrySettings.OpenTelemetryEndpoint)} should be configured.");
-
-        builder.Logging.AddOpenTelemetry(options =>
-        {
-            options.IncludeScopes = true;
-            options.ParseStateValues = true;
-            options.IncludeFormattedMessage = true;
-            options.AddOtlpExporter(option =>
-            {
-                option.Endpoint = new Uri(endpoint);
-                option.Protocol = OpenTelemetry.Exporter.OtlpExportProtocol.Grpc;
-            });
-        });
+                }))
+            .WithLogging(builder => builder
+                .SetResourceBuilder(resourceBuilder)
+                .AddOtlpExporter(cfg =>
+                {
+                    cfg.Endpoint = new Uri(openTelemetryEndpoint);
+                    cfg.Protocol = OpenTelemetry.Exporter.OtlpExportProtocol.Grpc;
+                }),
+                options =>
+                {
+                    options.IncludeScopes = true;
+                    options.ParseStateValues = true;
+                    options.IncludeFormattedMessage = true;
+                });
     }
 }

@@ -17,7 +17,7 @@ public static class ServiceCollectionExtensions
             .ValidateOnStart();
 
         var settings = configuration.GetSection(sectionName).Get<T>()
-            ?? throw new ArgumentException($"{nameof(T)} should be configured.");
+            ?? throw new ArgumentException($"{typeof(T).Name} should be configured.");
 
         return settings;
     }
