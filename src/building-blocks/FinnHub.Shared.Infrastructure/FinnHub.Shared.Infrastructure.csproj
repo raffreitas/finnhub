@@ -8,7 +8,7 @@
 
   <PropertyGroup>
     <PackageId>FinnHub.Shared.Infrastructure</PackageId>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
     <Authors>Rafael Freitas</Authors>
     <Company>FinnHub</Company>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -20,6 +20,7 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.6" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="9.0.6" />
     <PackageReference Include="Microsoft.Extensions.Options.DataAnnotations" Version="9.0.6" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
 </Project>
