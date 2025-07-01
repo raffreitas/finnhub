@@ -1,7 +1,4 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
-
-using FinnHub.PortfolioManagement.Infrastructure.Messaging.Models;
+﻿using FinnHub.PortfolioManagement.Infrastructure.Messaging.Models;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -32,17 +29,9 @@ internal sealed class OutboxMessageConfiguration : IEntityTypeConfiguration<Outb
             .IsRequired();
         builder
             .Property(e => e.MessageContent)
-            .HasConversion(
-                @event => JsonSerializer.Serialize(@event, JsonOptions),
-                @event => JsonSerializer.Deserialize<object>(@event, JsonOptions) ?? string.Empty
-            )
             .IsRequired();
         builder
             .Property(e => e.Headers)
-            .HasConversion(
-                @event => JsonSerializer.Serialize(@event, JsonOptions),
-                @event => JsonSerializer.Deserialize<object>(@event, JsonOptions) ?? string.Empty
-            )
             .IsRequired(false);
 
         builder
@@ -54,12 +43,4 @@ internal sealed class OutboxMessageConfiguration : IEntityTypeConfiguration<Outb
 
         builder.HasIndex(e => new { e.ProcessedAt, e.CreatedAt });
     }
-
-    private static readonly JsonSerializerOptions JsonOptions = new()
-    {
-        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-        WriteIndented = false,
-        ReferenceHandler = ReferenceHandler.IgnoreCycles
-    };
 }

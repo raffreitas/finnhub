@@ -1,6 +1,7 @@
 using FinnHub.PortfolioManagement.Application.Abstractions.Messaging;
 using FinnHub.PortfolioManagement.Infrastructure.Messaging.Models;
 using FinnHub.PortfolioManagement.Infrastructure.Persistence.Context;
+using FinnHub.Shared.Infrastructure.Extensions;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -33,7 +34,12 @@ public class OutboxPublisherWorker(
                 {
                     try
                     {
-                        await messageBus.PublishAsync(message.MessageContent, null, stoppingToken);
+                        var messageContent = message.MessageContent.ToNameTypeObject<object>();
+                        var eventType = messageContent.GetType()
+                            ?? throw new InvalidOperationException($"Event type '{messageContent.GetType().Name}' could not be resolved.");
+                        var publishMethod = (typeof(IMessageBus).GetMethod("PublishAsync")?.MakeGenericMethod(eventType))
+                            ?? throw new InvalidOperationException("PublishAsync method could not be resolved.");
+                        await (Task)publishMethod.Invoke(messageBus, [messageContent, null, stoppingToken])!;
                         message.ProcessedAt = DateTimeOffset.UtcNow;
                         message.ErrorMessage = null;
                     }

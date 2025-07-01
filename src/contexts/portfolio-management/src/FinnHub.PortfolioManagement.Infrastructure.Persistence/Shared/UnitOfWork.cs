@@ -1,6 +1,7 @@
 ﻿using FinnHub.PortfolioManagement.Application.Abstractions;
 using FinnHub.PortfolioManagement.Infrastructure.Messaging.Models;
 using FinnHub.PortfolioManagement.Infrastructure.Persistence.Context;
+using FinnHub.Shared.Infrastructure.Extensions;
 using FinnHub.Shared.Kernel;
 
 namespace FinnHub.PortfolioManagement.Infrastructure.Persistence.Shared;
@@ -22,7 +23,7 @@ internal sealed class UnitOfWork(ApplicationDbContext dbContext) : IUnitOfWork
             {
                 EventName = x.GetType().Name,
                 MessageType = "DomainEvent",
-                MessageContent = x,
+                MessageContent = x.ToNameTypeJson(),
             })
             .ToList();
 

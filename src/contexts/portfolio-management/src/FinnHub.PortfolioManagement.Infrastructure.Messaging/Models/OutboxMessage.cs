@@ -7,8 +7,8 @@ public sealed class OutboxMessage
     public DateTimeOffset? ProcessedAt { get; set; }
     public required string EventName { get; set; }
     public required string MessageType { get; set; }
-    public required object MessageContent { get; set; }
-    public object? Headers { get; set; }
+    public required string MessageContent { get; set; }
+    public string? Headers { get; set; }
     public int DeliveryAttempts { get; set; }
     public string? ErrorMessage { get; set; }
 }
