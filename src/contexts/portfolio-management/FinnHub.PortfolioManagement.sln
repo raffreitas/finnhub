@@ -25,10 +25,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6 - Tests", "6 - Tests", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinnHub.PortfolioManagement.Infrastructure.Messaging", "src\FinnHub.PortfolioManagement.Infrastructure.Messaging\FinnHub.PortfolioManagement.Infrastructure.Messaging.csproj", "{293F46C4-901E-4307-A52B-D2DE595B1333}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinnHub.PortfolioManagement.Application.Tests", "test\FinnHub.PortfolioManagement.Application.Tests\FinnHub.PortfolioManagement.Application.Tests.csproj", "{9B51BEE5-EF9E-4BDE-A7BC-3A4F53E09D18}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinnHub.PortfolioManagement.WebApi.Tests", "test\FinnHub.PortfolioManagement.WebApi.Tests\FinnHub.PortfolioManagement.WebApi.Tests.csproj", "{2FE74A99-AF28-4603-B5B3-DD7A8691EFC4}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinnHub.PortfolioManagement.Infrastructure.Authentication", "src\FinnHub.PortfolioManagement.Infrastructure.Authentication\FinnHub.PortfolioManagement.Infrastructure.Authentication.csproj", "{6C7860BA-35E4-4A7C-AC46-85E07AEFED63}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinnHub.PortfolioManagement.Infrastructure.Telemetry", "src\FinnHub.PortfolioManagement.Infrastructure.Telemetry\FinnHub.PortfolioManagement.Infrastructure.Telemetry.csproj", "{CF5A1104-77D3-9D4E-0229-9B4FB855494B}"
@@ -39,7 +35,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5 - Workers", "5 - Workers"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinnHub.PortfolioManagement.Worker.OutboxPublisher", "src\FinnHub.PortfolioManagement.Worker.OutboxPublisher\FinnHub.PortfolioManagement.Worker.OutboxPublisher.csproj", "{81C12C03-581F-466E-884C-736B28D344A0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinnHub.PortfolioManagement.Domain.UnitTests", "test\FinnHub.PortfolioManagement.Domain.UnitTests\FinnHub.PortfolioManagement.Domain.UnitTests.csproj", "{E3CC6FB0-8AB5-6E2C-209E-CC9D00C8949A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinnHub.PortfolioManagement.FunctionalTests", "test\FinnHub.PortfolioManagement.FunctionalTests\FinnHub.PortfolioManagement.FunctionalTests.csproj", "{3EA9C63E-5CEF-D2DB-7698-921856813973}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinnHub.PortfolioManagement.IntegrationTests", "test\FinnHub.PortfolioManagement.IntegrationTests\FinnHub.PortfolioManagement.IntegrationTests.csproj", "{5EFF559A-1B0D-9ED4-B56B-227DA460F7EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinnHub.PortfolioManagement.UnitTests", "test\FinnHub.PortfolioManagement.UnitTests\FinnHub.PortfolioManagement.UnitTests.csproj", "{C9B4A81F-F429-7EBF-E812-D2FC05D54335}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,14 +71,6 @@ Global
 		{293F46C4-901E-4307-A52B-D2DE595B1333}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{293F46C4-901E-4307-A52B-D2DE595B1333}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{293F46C4-901E-4307-A52B-D2DE595B1333}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9B51BEE5-EF9E-4BDE-A7BC-3A4F53E09D18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9B51BEE5-EF9E-4BDE-A7BC-3A4F53E09D18}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9B51BEE5-EF9E-4BDE-A7BC-3A4F53E09D18}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9B51BEE5-EF9E-4BDE-A7BC-3A4F53E09D18}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2FE74A99-AF28-4603-B5B3-DD7A8691EFC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2FE74A99-AF28-4603-B5B3-DD7A8691EFC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2FE74A99-AF28-4603-B5B3-DD7A8691EFC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2FE74A99-AF28-4603-B5B3-DD7A8691EFC4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6C7860BA-35E4-4A7C-AC46-85E07AEFED63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6C7860BA-35E4-4A7C-AC46-85E07AEFED63}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C7860BA-35E4-4A7C-AC46-85E07AEFED63}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -95,10 +87,18 @@ Global
 		{81C12C03-581F-466E-884C-736B28D344A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81C12C03-581F-466E-884C-736B28D344A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81C12C03-581F-466E-884C-736B28D344A0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E3CC6FB0-8AB5-6E2C-209E-CC9D00C8949A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E3CC6FB0-8AB5-6E2C-209E-CC9D00C8949A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E3CC6FB0-8AB5-6E2C-209E-CC9D00C8949A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E3CC6FB0-8AB5-6E2C-209E-CC9D00C8949A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3EA9C63E-5CEF-D2DB-7698-921856813973}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EA9C63E-5CEF-D2DB-7698-921856813973}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EA9C63E-5CEF-D2DB-7698-921856813973}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EA9C63E-5CEF-D2DB-7698-921856813973}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EFF559A-1B0D-9ED4-B56B-227DA460F7EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EFF559A-1B0D-9ED4-B56B-227DA460F7EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EFF559A-1B0D-9ED4-B56B-227DA460F7EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EFF559A-1B0D-9ED4-B56B-227DA460F7EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9B4A81F-F429-7EBF-E812-D2FC05D54335}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9B4A81F-F429-7EBF-E812-D2FC05D54335}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9B4A81F-F429-7EBF-E812-D2FC05D54335}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9B4A81F-F429-7EBF-E812-D2FC05D54335}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -110,13 +110,13 @@ Global
 		{75BC1C2A-8540-59B4-9914-BD26826AEF3D} = {7E3C9E67-D09E-43D7-B88C-1754FB0B3A83}
 		{2B0EF4FC-8CC3-48C2-915C-423600880FFE} = {7E3C9E67-D09E-43D7-B88C-1754FB0B3A83}
 		{293F46C4-901E-4307-A52B-D2DE595B1333} = {7E3C9E67-D09E-43D7-B88C-1754FB0B3A83}
-		{9B51BEE5-EF9E-4BDE-A7BC-3A4F53E09D18} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
-		{2FE74A99-AF28-4603-B5B3-DD7A8691EFC4} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{6C7860BA-35E4-4A7C-AC46-85E07AEFED63} = {7E3C9E67-D09E-43D7-B88C-1754FB0B3A83}
 		{CF5A1104-77D3-9D4E-0229-9B4FB855494B} = {7E3C9E67-D09E-43D7-B88C-1754FB0B3A83}
 		{1B40B0E0-4179-4441-8D88-E6F9F315EB39} = {7E3C9E67-D09E-43D7-B88C-1754FB0B3A83}
 		{81C12C03-581F-466E-884C-736B28D344A0} = {7F3E43F1-A20B-4AE8-B197-32A3A2FC2730}
-		{E3CC6FB0-8AB5-6E2C-209E-CC9D00C8949A} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{3EA9C63E-5CEF-D2DB-7698-921856813973} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{5EFF559A-1B0D-9ED4-B56B-227DA460F7EB} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{C9B4A81F-F429-7EBF-E812-D2FC05D54335} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {77EDBFBC-F0EF-4D34-9EC4-AC85A96374D9}

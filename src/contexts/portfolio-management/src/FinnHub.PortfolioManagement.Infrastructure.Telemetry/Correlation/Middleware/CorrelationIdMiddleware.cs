@@ -6,11 +6,10 @@ using Microsoft.Extensions.Logging;
 namespace FinnHub.PortfolioManagement.Infrastructure.Telemetry.Correlation.Middleware;
 internal sealed class CorrelationIdMiddleware(
     RequestDelegate next,
-    ICorrelationContextFactory correlationContextFactory,
     ILogger<CorrelationIdMiddleware> logger
 )
 {
-    public async Task InvokeAsync(HttpContext context)
+    public async Task InvokeAsync(HttpContext context, ICorrelationContextFactory correlationContextFactory)
     {
         var correlationId = GetCorrelationId(context);
 

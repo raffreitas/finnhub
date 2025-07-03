@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <InternalsVisibleTo Include="FinnHub.PortfolioManagement.WebApi.Tests" />
+    <InternalsVisibleTo Include="FinnHub.PortfolioManagement.IntegrationTests" />
   </ItemGroup>
 
 </Project>

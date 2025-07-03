@@ -9,7 +9,7 @@
   <ItemGroup>
     <PackageReference Include="FinnHub.Shared.Core" Version="1.0.1" />
     <PackageReference Include="FluentValidation" Version="12.0.0" />
-    <PackageReference Include="MediatR" Version="12.5.0" />
+    <PackageReference Include="MediatR" Version="13.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.6" />
   </ItemGroup>
 
@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <InternalsVisibleTo Include="FinnHub.PortfolioManagement.Application.Tests" />
+    <InternalsVisibleTo Include="FinnHub.PortfolioManagement.UnitTests" />
   </ItemGroup>
 
 </Project>
