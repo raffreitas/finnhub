@@ -18,6 +18,7 @@ namespace FinnHub.PortfolioManagement.WebApi.Controllers;
 
 [Route("api/v1/portfolios")]
 [Authorize]
+[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 public class PortfolioController(ISender sender) : ControllerBase
 {
     [HttpPost]
