@@ -23,19 +23,20 @@ internal sealed class RegisterBuyAssetRequestValidation : AbstractValidator<Regi
     public RegisterBuyAssetRequestValidation()
     {
         RuleFor(x => x.PortfolioId)
-            .NotEmpty()
-            .NotEqual(Guid.Empty);
+            .NotEmpty();
 
         RuleFor(x => x.AssetSymbol)
             .NotEmpty()
-            .MinimumLength(1)
+            .MinimumLength(3)
             .MaximumLength(10);
 
         RuleFor(x => x.Quantity)
             .GreaterThan(1);
 
         RuleFor(x => x.PricePerUnit)
-            .NotEmpty()
             .GreaterThan(0);
+
+        RuleFor(x => x.TransactionDate)
+            .NotEmpty();
     }
 }
