@@ -16,7 +16,7 @@ using Shouldly;
 namespace FinnHub.PortfolioManagement.IntegrationTests.WebApi.Controllers.Portfolios.BuyTransaction;
 
 [Trait("IntegrationTests", "WebApi - Portfolio - Endpoints")]
-public class SellTransactionTests(WebApiFactory factory) : WebApiTestFixture(factory)
+public class BuyTransactionTests(WebApiFactory factory) : WebApiTestFixture(factory)
 {
     private readonly IMarketDataService _marketDataServiceMock = factory.MarketDataServiceMock;
     private readonly Portfolio _portfolioMock = factory.PortfolioMock;

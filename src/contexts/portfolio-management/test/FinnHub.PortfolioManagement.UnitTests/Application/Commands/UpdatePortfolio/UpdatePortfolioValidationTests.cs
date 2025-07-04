@@ -50,8 +50,8 @@ public sealed class UpdatePortfolioValidationTests(CommandsBaseFixture fixture) 
             .ShouldBe($"The length of 'Name' must be at least 3 characters. You entered {name.Length} characters.");
     }
 
-    [Fact(DisplayName = nameof(Validate_ShouldReturnError_WhenNameIsGreatherThen50Characters))]
-    public void Validate_ShouldReturnError_WhenNameIsGreatherThen50Characters()
+    [Fact(DisplayName = nameof(Validate_ShouldReturnError_WhenNameIsGreaterThen50Characters))]
+    public void Validate_ShouldReturnError_WhenNameIsGreaterThen50Characters()
     {
         // Arrange
         var name = fixture.Faker.Random.String2(51);
