@@ -31,7 +31,7 @@ internal sealed class RegisterBuyAssetRequestValidation : AbstractValidator<Regi
             .MaximumLength(10);
 
         RuleFor(x => x.Quantity)
-            .GreaterThan(1);
+            .GreaterThan(0);
 
         RuleFor(x => x.PricePerUnit)
             .GreaterThan(0);

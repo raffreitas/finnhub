@@ -129,7 +129,7 @@ public sealed class RegisterBuyAssetValidationTests(CommandsBaseFixture fixture)
         // Assert  
         validationResult.IsValid.ShouldBeFalse();
         validationResult.Errors.Count.ShouldBe(1);
-        validationResult.Errors[0].ErrorMessage.ShouldBe("'Quantity' must be greater than '1'.");
+        validationResult.Errors[0].ErrorMessage.ShouldBe("'Quantity' must be greater than '0'.");
     }
 
     [Fact]

@@ -9,10 +9,9 @@ public static class DependencyInjectionConfiguration
 {
     public static IServiceCollection AddIntegrationsConfiguration(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddScoped<AccessTokenHttpMessageHandler>();
-
+        services.AddHttpClient();
+        services.AddTransient<AccessTokenHttpMessageHandler>();
         services.AddMarketDataConfiguration(configuration);
-
         return services;
     }
 }
